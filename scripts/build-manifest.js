@@ -17,17 +17,20 @@ function extractTitle(html) {
   return match ? match[1].trim() : null;
 }
 
-function readFolderDisplayName(folderPath, folderName) {
+function readFolderMeta(folderPath, folderName) {
   const metaPath = path.join(folderPath, 'folder.json');
-  if (fs.existsSync(metaPath)) {
-    try {
-      const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
-      if (meta.name) return meta.name;
-    } catch {
-      /* ignore invalid meta */
-    }
+  const defaults = { name: folderName };
+  if (!fs.existsSync(metaPath)) return defaults;
+
+  try {
+    const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
+    return {
+      name: meta.name || folderName,
+      copyright: meta.copyright || null,
+    };
+  } catch {
+    return defaults;
   }
-  return folderName;
 }
 
 function scanPresentations() {
@@ -58,11 +61,14 @@ function scanPresentations() {
     }
 
     if (presentations.length > 0) {
-      categories.push({
+      const meta = readFolderMeta(folderPath, entry.name);
+      const category = {
         id: entry.name,
-        name: readFolderDisplayName(folderPath, entry.name),
+        name: meta.name,
         presentations,
-      });
+      };
+      if (meta.copyright) category.copyright = meta.copyright;
+      categories.push(category);
     }
   }
 
