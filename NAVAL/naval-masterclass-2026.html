@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026 納瓦爾心靈大師班</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Noto Sans TC & Noto Serif TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;700;900&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Noto Sans TC', 'sans-serif'],
+            serif: ['Noto Serif TC', 'serif'],
+          },
+          colors: {
+            cream: {
+              50: '#FDFBF7',
+              100: '#FAF6EE',
+              200: '#F5EFEB',
+              300: '#EAE1D7',
+            },
+            sand: {
+              400: '#D6C5B3',
+              500: '#C2AD96',
+              600: '#A48E75',
+              700: '#7F6B55',
+            },
+            terracotta: {
+              400: '#D9917D',
+              500: '#C97A64',
+              600: '#A35C49',
+              700: '#7C3E2F',
+            },
+            sage: {
+              100: '#EAEFEA',
+              500: '#6E7E75',
+              800: '#404B44',
+            },
+            charcoal: '#232120'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #232120;
+      color: #FAF6EE;
+      overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.1);
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: rgba(194, 173, 150, 0.5);
+      border-radius: 4px;
+    }
+    /* 煙霧繚繞動效背景 */
+    .zen-bg {
+      background: radial-gradient(circle at 50% 50%, rgba(194, 173, 150, 0.05) 0%, rgba(35, 33, 32, 0) 70%);
+    }
+  </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col justify-between zen-bg">
+
+  <!-- 頂部導航列 -->
+  <header class="border-b border-sand/20 px-6 py-4 flex flex-wrap items-center justify-between gap-4 bg-charcoal/90 backdrop-blur-sm sticky top-0 z-30 transition-colors duration-500">
+    <div class="flex items-center gap-3">
+      <!-- 禪意 Logo Mark -->
+      <svg class="w-8 h-8 text-terracotta-500 transition-transform duration-1000 hover:rotate-180" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2" stroke-dasharray="6 6"/>
+        <path d="M50 20C35 35 35 65 50 80C65 65 65 35 50 20Z" fill="currentColor" opacity="0.3"/>
+        <circle cx="50" cy="50" r="10" fill="currentColor"/>
+      </svg>
+      <div>
+        <h1 class="font-serif font-bold text-lg tracking-wider text-cream-100">2026 納瓦爾心靈大師班</h1>
+        <p class="text-xs text-sand-500 tracking-widest">SELF-INVESTMENT & DEEP INTEGRATION DECK</p>
+      </div>
+    </div>
+
+    <!-- 導航控制 -->
+    <div class="flex items-center gap-2">
+      <button id="themeToggleBtn" onclick="toggleLightDark()" class="px-3 py-1.5 rounded-full text-xs border border-sand/40 hover:bg-sand/20 transition-all text-cream-100 flex items-center gap-1.5">
+        <span id="themeIcon">☀️</span> <span id="themeText">禪意淺色</span>
+      </button>
+      <div class="h-4 w-[1px] bg-sand/30"></div>
+      <button onclick="toggleSidebar()" class="px-3 py-1.5 rounded-full text-xs bg-terracotta-500/20 text-terracotta-400 hover:bg-terracotta-500/30 border border-terracotta-500/40 transition-all flex items-center gap-1">
+        📂 課程目錄
+      </button>
+    </div>
+  </header>
+
+  <!-- 左側大綱抽屜 (Sidebar Drawer) -->
+  <div id="sidebar" class="fixed top-0 left-0 h-full w-80 bg-charcoal border-r border-sand/20 z-40 transform -translate-x-full transition-transform duration-300 ease-in-out shadow-2xl flex flex-col justify-between">
+    <div class="p-6">
+      <div class="flex justify-between items-center mb-8">
+        <h3 class="font-serif font-bold text-xl text-cream-100">課程大綱與章節</h3>
+        <button onclick="toggleSidebar()" class="text-sand-500 hover:text-cream-100 text-2xl leading-none">&times;</button>
+      </div>
+
+      <nav class="space-y-6 overflow-y-auto max-h-[70vh] custom-scroll pr-2">
+        <!-- 主題一 -->
+        <div>
+          <h4 class="text-xs font-bold text-terracotta-400 tracking-wider mb-2">PART 1: 2026 投資你自己</h4>
+          <ul class="space-y-1 text-sm">
+            <li><button onclick="goToSlide(0)" class="w-full text-left p-2 rounded hover:bg-sand/10 text-sand-500" id="nav-0">01. 簡報封面：接納自我之道</button></li>
+            <li><button onclick="goToSlide(1)" class="w-full text-left p-2 rounded hover:bg-sand/10 text-sand-500" id="nav-1">02. 「自私」的熱力學智慧</button></li>
+            <li><button onclick="goToSlide(2)" class="w-full text-left p-2 rounded hover:bg-sand/10 text-sand-500" id="nav-2">03. 注意力與心智護城河</button></li>
+            <li><button onclick="goToSlide(3)" class="w-full text-left p-2 rounded hover:bg-sand/10 text-sand-500" id="nav-3">04. 退出地位，發掘「特殊知識」</button></li>
+          </ul>
+        </div>
+
+        <!-- 主題二 -->
+        <div>
+          <h4 class="text-xs font-bold text-terracotta-400 tracking-wider mb-2">PART 2: 7條財富殘酷真相</h4>
+          <ul class="space-y-1 text-sm">
+            <li><button onclick="goToSlide(4)" class="w-full text-left p-2 rounded hover:bg-sand/10 text-sand-500" id="nav-4">05. 瓦解配得感與自我懲罰</button></li>
+            <li><button onclick="goToSlide(5)" class="w-full text-left p-2 rounded hover:bg-sand/10 text-sand-500" id="nav-5">06. 喜悅共振：鬆弛感的財富</button></li>
+            <li><button onclick="goToSlide(6)" class="w-full text-left p-2 rounded hover:bg-sand/10 text-sand-500" id="nav-6">07. 拆除受害者與吃苦崇拜</button></li>
+            <li><button onclick="goToSlide(7)" class="w-full text-left p-2 rounded hover:bg-sand/10 text-sand-500" id="nav-7">08. 潛意識網狀激活與審美力</button></li>
+          </ul>
+        </div>
+
+        <!-- 主題三 -->
+        <div>
+          <h4 class="text-xs font-bold text-terracotta-400 tracking-wider mb-2">PART 3: 中年靜靜富養自己</h4>
+          <ul class="space-y-1 text-sm">
+            <li><button onclick="goToSlide(8)" class="w-full text-left p-2 rounded hover:bg-sand/10 text-sand-500" id="nav-8">09. 能量絕對止損與課題分離</button></li>
+            <li><button onclick="goToSlide(9)" class="w-full text-left p-2 rounded hover:bg-sand/10 text-sand-500" id="nav-9">10. 重整消費觀與關係情懷撤退</button></li>
+            <li><button onclick="goToSlide(10)" class="w-full text-left p-2 rounded hover:bg-sand/10 text-sand-500" id="nav-10">11. 建立純粹無用的精神結界</button></li>
+            <li><button onclick="goToSlide(11)" class="w-full text-left p-2 rounded hover:bg-sand/10 text-sand-500" id="nav-11">12. 臣服與終章：先戴好氧氣面罩</button></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="p-6 border-t border-sand/20 text-center">
+      <p class="text-xs text-sand-600">© 2026 Naval's Philosophy Practice</p>
+    </div>
+  </div>
+
+  <!-- 背景遮罩 (Overlay) -->
+  <div id="overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-charcoal/70 z-30 hidden transition-opacity"></div>
+
+  <!-- 簡報舞台主體 (Main Stage) -->
+  <main class="flex-grow flex items-center justify-center p-4 md:p-8">
+    <div id="slideStage" class="w-full max-w-5xl bg-charcoal border border-sand/20 rounded-2xl shadow-2xl overflow-hidden min-h-[60vh] flex flex-col justify-between p-6 md:p-12 relative transition-all duration-500">
+      
+      <!-- 投影片分類角標 -->
+      <div class="flex justify-between items-center mb-6 z-10">
+        <span id="slideCategory" class="text-xs font-bold tracking-widest text-terracotta-500 uppercase">PART 1: 2026 投資你自己</span>
+        <span id="slideProgress" class="text-xs font-serif text-sand-500">01 / 12</span>
+      </div>
+
+      <!-- 投影片內容渲染區 (Slide Contents) -->
+      <div class="flex-grow flex flex-col justify-center py-4 z-10">
+        
+        <!-- ================= SLIDE 1: 封面 ================= -->
+        <div id="slide-content-0" class="slide-block space-y-6">
+          <div class="text-center space-y-4">
+            <span class="inline-block px-3 py-1 bg-terracotta-500/10 text-terracotta-400 text-xs tracking-widest font-bold rounded-full border border-terracotta-500/20">2026 核心生命重構計畫</span>
+            <h2 class="font-serif font-black text-3xl md:text-5xl leading-tight text-cream-100">2026 投資自己：<br><span class="text-terracotta-500">接納自我之道</span></h2>
+            <div class="w-20 h-[2px] bg-sand-500 mx-auto my-6"></div>
+            <p class="text-base md:text-lg text-sand-500 max-w-2xl mx-auto font-serif italic leading-relaxed">
+              「如果你在玩『做自己』的遊戲，你就沒有競爭對手。因為在整個宇宙中，沒有人能比你更擅長做你自己。」
+            </p>
+          </div>
+          <!-- 禪意插畫 (純代碼SVG) -->
+          <div class="flex justify-center pt-4">
+            <svg class="w-48 h-28 text-sand-500" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 85 Q50 40 100 85 T190 85" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M30 85 Q100 20 170 85" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3"/>
+              <!-- 靜思圓日 -->
+              <circle cx="100" cy="45" r="18" fill="none" stroke="#C97A64" stroke-width="1.5"/>
+              <circle cx="100" cy="45" r="4" fill="#C97A64"/>
+              <!-- 波紋 -->
+              <line x1="85" y1="92" x2="115" y2="92" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+              <line x1="92" y1="96" x2="108" y2="96" stroke="currentColor" stroke-width="1" opacity="0.2"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- ================= SLIDE 2: 熱力學與自私 ================= -->
+        <div id="slide-content-1" class="slide-block hidden space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="space-y-4">
+              <h3 class="font-serif font-bold text-2xl md:text-3xl text-cream-100">「自私」的熱力學智慧</h3>
+              <p class="text-sm md:text-base text-sand-500 leading-relaxed">
+                這聽起來違反直覺，但在 2026 年，你最具顛覆性的決定是學會「自私」。從物理學的熱力學定律來看：<span class="text-terracotta-400 font-bold">你無法從空杯子裡倒出水。</span>
+              </p>
+              <p class="text-sm md:text-base text-sand-500 leading-relaxed">
+                真正的利他必須建立在極度的自我豐盛之上。當你處於心理匱乏與精力透支狀態，你的給予和討好，在本質上都是在向外界索取情緒回饋，最終只會成為別人的情緒高利貸與負擔。
+              </p>
+            </div>
+            
+            <!-- 互動式：極度豐盛之杯 -->
+            <div class="bg-sand-500/5 p-6 rounded-2xl border border-sand/10 space-y-4">
+              <h4 class="text-xs font-bold tracking-widest text-terracotta-400 text-center">互動體驗：心靈蓄水池模擬</h4>
+              <div class="flex justify-center py-2">
+                <!-- 高質感水杯 SVG -->
+                <div class="relative w-28 h-44">
+                  <svg class="w-full h-full" viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 杯身外框 -->
+                    <path d="M20 10 L80 10 L75 130 C74 138 66 145 50 145 C34 145 26 138 25 130 Z" fill="none" stroke="#C2AD96" stroke-width="4"/>
+                    <!-- 水面與水體 (ClipPath 限制) -->
+                    <clipPath id="cupClip">
+                      <path d="M22 12 L78 12 L73 128 C72 134 65 141 50 141 C35 141 28 134 27 128 Z"/>
+                    </clipPath>
+                    <!-- 動態水位高度 -->
+                    <g clip-path="url(#cupClip)">
+                      <rect id="waterRect" x="0" y="90" width="100" height="150" fill="url(#waterGrad)" class="transition-all duration-500"/>
+                    </g>
+                    <!-- 漸層定義 -->
+                    <defs>
+                      <linearGradient id="waterGrad" x1="0" y1="1" x2="0" y2="0">
+                        <stop offset="0%" stop-color="#7C3E2F"/>
+                        <stop offset="100%" stop-color="#D9917D"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <!-- 杯內文字 -->
+                  <div class="absolute inset-0 flex items-center justify-center font-bold text-xs" id="cupLabel">
+                    <span class="text-cream-100 bg-charcoal/60 px-2 py-0.5 rounded">40% 匱乏</span>
+                  </div>
+                </div>
+              </div>
+              <div class="space-y-2">
+                <label class="text-xs text-sand-500 flex justify-between">
+                  <span>調整你的「自我滋養與投資度」：</span>
+                  <span id="abundanceValue" class="text-terracotta-400 font-bold">40%</span>
+                </label>
+                <input type="range" id="abundanceSlider" min="10" max="100" value="40" oninput="updateAbundanceCup(this.value)" class="w-full accent-terracotta-500">
+                <p id="cupVerdict" class="text-xs text-center text-sand-600 transition-all">當前狀態：空杯倒水，給予他人只會帶著委屈和壓力。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= SLIDE 3: 注意力與護城河 ================= -->
+        <div id="slide-content-2" class="slide-block hidden space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="space-y-4">
+              <h3 class="font-serif font-bold text-2xl md:text-3xl text-cream-100">保護注意力與設定界限</h3>
+              <p class="text-sm md:text-base text-sand-500 leading-relaxed">
+                注意力是你最稀缺的資產。你每天只有幾小時的高品質注意力，它甚至比比特幣還要稀缺。
+              </p>
+              <div class="p-4 bg-terracotta-500/10 rounded-xl border border-terracotta-500/20">
+                <p class="text-sm text-terracotta-400 font-serif">
+                  「界限不是隔離世界的高牆，而是保護你時間與心智城堡的『護城河』。」
+                </p>
+              </div>
+              <p class="text-sm md:text-base text-sand-500 leading-relaxed">
+                拉起城堡的吊橋，保護內部能量。你必須勇敢對那些只索取、不付出、持續消耗你精力的人事物說「不」。
+              </p>
+            </div>
+
+            <!-- 互動式：護城河城堡 SVG -->
+            <div class="bg-sand-500/5 p-6 rounded-2xl border border-sand/10 space-y-4">
+              <h4 class="text-xs font-bold tracking-widest text-terracotta-400 text-center">互動體驗：拉起心智吊橋</h4>
+              
+              <!-- 城堡與能量護罩 SVG -->
+              <div class="flex justify-center">
+                <svg class="w-40 h-24" viewBox="0 0 160 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- 心靈護罩 -->
+                  <circle id="shieldCircle" cx="80" cy="55" r="40" stroke="#6E7E75" stroke-width="2" stroke-dasharray="4 4" class="transition-all duration-500 opacity-20"/>
+                  <!-- 城堡本體 -->
+                  <rect x="50" y="45" width="60" height="35" fill="#A48E75" opacity="0.8"/>
+                  <rect x="45" y="30" width="15" height="50" fill="#7F6B55"/>
+                  <rect x="100" y="30" width="15" height="50" fill="#7F6B55"/>
+                  <!-- 城垛 -->
+                  <path d="M45 25h5v5h-5z M55 25h5v5h-5z M100 25h5v5h-5z M110 25h5v5h-5z" fill="#7F6B55"/>
+                  <!-- 吊橋 -->
+                  <line id="castleBridge" x1="65" y1="80" x2="95" y2="80" stroke="#7C3E2F" stroke-width="4" stroke-linecap="round" class="origin-left transition-transform duration-500" style="transform: rotate(0deg);"/>
+                  <rect x="68" y="55" width="24" height="25" fill="#232120"/>
+                </svg>
+              </div>
+
+              <div class="space-y-2">
+                <label class="flex justify-between items-center p-2 rounded bg-charcoal/50 border border-sand/10 cursor-pointer">
+                  <span class="text-xs text-cream-200">❌ 阻斷無意義的八卦與網路雜音</span>
+                  <input type="checkbox" onchange="updateShield()" class="shield-chk accent-terracotta-500 w-4 h-4">
+                </label>
+                <label class="flex justify-between items-center p-2 rounded bg-charcoal/50 border border-sand/10 cursor-pointer">
+                  <span class="text-xs text-cream-200">❌ 隔絕負能量、倒情緒垃圾的假朋友</span>
+                  <input type="checkbox" onchange="updateShield()" class="shield-chk accent-terracotta-500 w-4 h-4">
+                </label>
+                <label class="flex justify-between items-center p-2 rounded bg-charcoal/50 border border-sand/10 cursor-pointer">
+                  <span class="text-xs text-cream-200">❌ 拒絕被迫內卷的無效社交與應酬</span>
+                  <input type="checkbox" onchange="updateShield()" class="shield-chk accent-terracotta-500 w-4 h-4">
+                </label>
+              </div>
+
+              <!-- 防禦度血條 -->
+              <div class="space-y-1.5 pt-1">
+                <div class="flex justify-between text-xs">
+                  <span class="text-sand-600">防護等級：</span>
+                  <span id="shieldHp" class="text-sand-600 font-bold">0% (吊橋放平)</span>
+                </div>
+                <div class="w-full bg-charcoal h-2.5 rounded-full overflow-hidden">
+                  <div id="shieldBar" class="bg-sage-500 h-full transition-all duration-300" style="width: 0%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= SLIDE 4: 地位遊戲 vs 特殊知識 ================= -->
+        <div id="slide-content-3" class="slide-block hidden space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="space-y-4">
+              <h3 class="font-serif font-bold text-2xl md:text-3xl text-cream-100">退出「地位遊戲」，發掘「特殊知識」</h3>
+              <p class="text-sm md:text-base text-sand-500 leading-relaxed">
+                社會標準的成功（更多金錢、更高職位、更大房子）是一場零和的<strong>「地位遊戲」</strong>。模仿別人、盲目攀比，注定會陷入永無止境的內耗中。
+              </p>
+              <p class="text-sm md:text-base text-sand-500 leading-relaxed">
+                你必須尋找你的<strong>「特殊知識」</strong>——那些無法在學校學到、源自你童年時期未被社會馴化前的熱愛與天賦。
+              </p>
+              <p class="text-sm text-terracotta-400 font-semibold font-serif">
+                「當你做這件事像是在玩耍，而對別人來說卻是痛苦的工作時，你就贏了。」
+              </p>
+            </div>
+
+            <!-- 特殊知識：三環文氏圖 (純代碼SVG) -->
+            <div class="bg-sand-500/5 p-6 rounded-2xl border border-sand/10 flex flex-col items-center justify-center space-y-4">
+              <h4 class="text-xs font-bold tracking-widest text-terracotta-400">特殊知識黃金交集圈</h4>
+              <svg class="w-full max-w-[240px] h-48" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- 童年熱愛 (左上) -->
+                <circle cx="85" cy="85" r="45" fill="none" stroke="#D9917D" stroke-width="2"/>
+                <circle cx="85" cy="85" r="45" fill="#D9917D" opacity="0.15"/>
+                <text x="60" y="70" fill="#D9917D" font-size="9" font-weight="bold">童年未馴化熱愛</text>
+                
+                <!-- 獨特天賦 (右上) -->
+                <circle cx="115" cy="85" r="45" fill="none" stroke="#6E7E75" stroke-width="2"/>
+                <circle cx="115" cy="85" r="45" fill="#6E7E75" opacity="0.15"/>
+                <text x="100" y="70" fill="#6E7E75" font-size="9" font-weight="bold">獨特天賦</text>
+                
+                <!-- 市場需求 (下方) -->
+                <circle cx="100" cy="115" r="45" fill="none" stroke="#C2AD96" stroke-width="2"/>
+                <circle cx="100" cy="115" r="45" fill="#C2AD96" opacity="0.15"/>
+                <text x="80" y="145" fill="#C2AD96" font-size="9" font-weight="bold">市場高溢價需求</text>
+                
+                <!-- 黃金交叉點 (中心) -->
+                <path d="M100 82 A20 20 0 0 1 106 100 A20 20 0 0 1 94 100 A20 20 0 0 1 100 82 Z" fill="#C97A64" opacity="0.8"/>
+                <text x="100" y="97" fill="#FAF6EE" font-size="8" font-weight="bold" text-anchor="middle">做自己</text>
+              </svg>
+              <p class="text-[11px] text-center text-sand-500">當你的特質落在核心交叉點，你就創造了不可替代性。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= SLIDE 5: 瓦解配得感與自我懲罰 ================= -->
+        <div id="slide-content-4" class="slide-block hidden space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="space-y-4">
+              <h3 class="font-serif font-bold text-2xl md:text-3xl text-cream-100">配得感：重寫大腦預設代碼</h3>
+              <p class="text-sm md:text-base text-sand-500 leading-relaxed">
+                很多人賺不到大錢，或者存不住錢，根源在於潛意識裡的<span class="text-terracotta-400 font-bold">「自我懲罰機制」</span>。
+              </p>
+              <p class="text-sm md:text-base text-sand-500 leading-relaxed font-serif italic">
+                「去餐廳永遠點最便宜的；買了好衣服捨不得穿在櫃子裡發霉；偶爾放個假就充滿罪惡感——這些都是潛意識在向宇宙發送信號：『我不配得到豐盛。』」
+              </p>
+              <p class="text-sm md:text-base text-sand-500 leading-relaxed">
+                你每次坦然取悅自己、享用好物，都是在為大腦重寫指令代碼：「這就是我的正常生活水平。」
+              </p>
+            </div>
+
+            <!-- 互動式：寫入豐盛代碼 -->
+            <div class="bg-sand-500/5 p-6 rounded-2xl border border-sand/10 space-y-4">
+              <h4 class="text-xs font-bold tracking-widest text-terracotta-400 text-center">重置潛意識代碼</h4>
+              <p class="text-xs text-sand-600 text-center">嘗試勾選，允許以下美好不帶愧疚地進入你的生活：</p>
+              
+              <div class="space-y-2">
+                <label class="flex items-center gap-3 p-2 rounded bg-charcoal/40 border border-sand/10 cursor-pointer text-xs">
+                  <input type="checkbox" onchange="upgradeCodeProgress()" class="code-chk accent-terracotta-500 w-4 h-4">
+                  <span>坦然享用一杯平時不捨得點的高品質單品咖啡</span>
+                </label>
+                <label class="flex items-center gap-3 p-2 rounded bg-charcoal/40 border border-sand/10 cursor-pointer text-xs">
+                  <input type="checkbox" onchange="upgradeCodeProgress()" class="code-chk accent-terracotta-500 w-4 h-4">
+                  <span>將新買的好衣服立刻剪標穿上，不為特定的日子等待</span>
+                </label>
+                <label class="flex items-center gap-3 p-2 rounded bg-charcoal/40 border border-sand/10 cursor-pointer text-xs">
+                  <input type="checkbox" onchange="upgradeCodeProgress()" class="code-chk accent-terracotta-500 w-4 h-4">
+                  <span>疲憊時心安理得地關掉手機，給自己放一個安靜的假</span>
+                </label>
+                <label class="flex items-center gap-3 p-2 rounded bg-charcoal/40 border border-sand/10 cursor-pointer text-xs">
+                  <input type="checkbox" onchange="upgradeCodeProgress()" class="code-chk accent-terracotta-500 w-4 h-4">
+                  <span>為餐桌買一束「沒有任何實用價值」的鮮花滋養靈魂</span>
+                </label>
+              </div>
+
+              <!-- 進度條 -->
+              <div class="space-y-1 pt-2">
+                <div class="flex justify-between text-xs">
+                  <span class="text-sand-600">潛意識代碼升級進度：</span>
+                  <span id="codePercent" class="text-terracotta-500 font-bold">0% (匱乏頻率)</span>
+                </div>
+                <div class="w-full bg-charcoal h-2.5 rounded-full overflow-hidden">
+                  <div id="codeBar" class="bg-terracotta-500 h-full transition-all duration-300" style="width: 0%;"></div>
+                </div>
+                <p id="codeOutput" class="text-[10px] text-center text-sand-600">潛意識正在執行舊版本的匱乏自懲程序...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= SLIDE 6: 能量共振 ================= -->
+        <div id="slide-content-5" class="slide-block hidden space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="space-y-4">
+              <h3 class="font-serif font-bold text-2xl md:text-3xl text-cream-100">財富只與喜悅與鬆弛同頻共振</h3>
+              <p class="text-sm md:text-base text-sand-500 leading-relaxed">
+                在意識能量層級中，<strong>焦慮、壓抑、緊繃、苦大仇深</strong>屬於極低的震動能；而<strong>鬆弛、愉悅、滿足與滿足</strong>則是極高的頻率。
+              </p>
+              <p class="text-sm md:text-base text-sand-500 leading-relaxed font-serif italic text-terracotta-400">
+                「越鬆弛的人，錢越容易流向他；越緊繃的人，錢越是繞著他走。」
+              </p>
+              <p class="text-sm md:text-base text-sand-500 leading-relaxed">
+                當你散發著飢渴與焦慮的緊繃感時，人性避害的本能會讓合作夥伴和好運自動防備、遠離你。金錢本質上是信任的兌現，而信任來自你鬆弛自信的生命氣場。
+              </p>
+            </div>
+
+            <!-- 視覺設計：能量共振圖 (純代碼SVG) -->
+            <div class="bg-sand-500/5 p-6 rounded-2xl border border-sand/10 flex flex-col items-center justify-center space-y-4 min-h-[300px]">
+              <h4 class="text-xs font-bold tracking-widest text-terracotta-400">心靈能量與財富吸力模型</h4>
+              <svg class="w-full max-w-[280px] h-48" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- 緊繃低頻波 -->
+                <path d="M10 160 L20 150 L30 170 L40 140 L50 180 L60 130 L70 190 L80 140 L90 170 L100 150 L110 130 L120 180 L130 150" stroke="#7F6B55" stroke-width="1.5" stroke-linecap="round"/>
+                <text x="10" y="125" fill="#7F6B55" font-size="10">緊繃匱乏波 (低頻摩擦)</text>
+                
+                <!-- 鬆弛高頻正弦波 -->
+                <path d="M10 60 Q32.5 20 55 60 T100 60 T145 60 T190 60" stroke="#C97A64" stroke-width="3" stroke-linecap="round" class="opacity-80"/>
+                <text x="10" y="95" fill="#C97A64" font-size="11" font-family="serif" font-weight="bold">鬆弛喜悅波 (豐盛高頻)</text>
+                
+                <!-- 吸力漩渦 -->
+                <circle cx="150" cy="60" r="12" fill="#C97A64" opacity="0.2"/>
+                <circle cx="150" cy="60" r="22" fill="none" stroke="#C97A64" stroke-width="1" stroke-dasharray="2 2"/>
+                <text x="135" y="64" fill="#FAF6EE" font-size="10" font-weight="bold">財富流向</text>
+              </svg>
+              <p class="text-xs text-center text-sand-500 leading-relaxed">
+                放鬆時，大腦感官被完全開啟，你才能看見商機；當你滿腦焦慮，你只能看見眼前的摩擦。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= SLIDE 7: 拆除受苦崇拜 ================= -->
+        <div id="slide-content-6" class="slide-block hidden space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="space-y-4">
+              <h3 class="font-serif font-bold text-2xl md:text-3xl text-cream-100">徹底丟掉「吃苦崇拜」的受害者劇本</h3>
+              <p class="text-sm md:text-base text-sand-500 leading-relaxed">
+                世俗文化深埋著一種隱蔽而致命的觀念：<strong>吃苦崇拜</strong>。認為生活必須受罪才是對的，舒服快樂就等同於墮落。
+              </p>
+              <p class="text-sm md:text-base text-sand-500 leading-relaxed text-terracotta-400">
+                這套「道德受害者優越感」會驅使你在變輕鬆、即將成功的前一刻親手搞砸，藉此維持「我很苦、我很偉大，所以老天欠我」的心理熟悉感。
+              </p>
+              <div class="p-4 bg-sand-500/10 rounded-xl border border-sand/20">
+                <p class="text-xs text-sand-500 font-semibold leading-relaxed">
+                  ⚠️ 財富殘酷真相：<br>
+                  市場給你的報酬 ＝ 你創造的「不可替代價值」 × 槓桿率。<br>
+                  市場從來不按你流了多少汗水與委屈度來支付報酬。
+                </p>
+              </div>
+            </div>
+
+            <!-- 自我解放：打破枷鎖 SVG -->
+            <div class="bg-sand-500/5 p-6 rounded-2xl border border-sand/10 space-y-4 flex flex-col items-center">
+              <h4 class="text-xs font-bold tracking-widest text-terracotta-400">粉碎潛意識枷鎖</h4>
+              <svg class="w-48 h-32 text-sand-500" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+                <!-- 斷裂的鎖鏈 -->
+                <!-- 左鎖環 -->
+                <rect x="30" y="50" width="40" height="20" rx="10" fill="none" stroke="#7F6B55" stroke-width="4"/>
+                <!-- 斷開的連接處 -->
+                <path d="M78 50 L82 45 M82 75 L78 70" stroke="#FAF6EE" stroke-width="4" stroke-linecap="round"/>
+                <!-- 右鎖環 -->
+                <rect x="110" y="50" width="40" height="20" rx="10" fill="none" stroke="#7F6B55" stroke-width="4" class="origin-center rotate-12"/>
+                
+                <text x="100" y="30" fill="#C97A64" font-size="12" font-family="serif" font-weight="bold" text-anchor="middle">痛苦與汗水 ≠ 價值</text>
+                <!-- 光芒 -->
+                <path d="M100 50 L100 40 M90 53 L80 47 M110 53 L120 47 M100 70 L100 80" stroke="#C97A64" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <div class="text-center">
+                <p class="text-xs text-cream-200">命運從不獎勵痛苦本身</p>
+                <p class="text-[11px] text-sand-500 mt-1">放下受苦的道德優越感，心安理得地用喜悅換取豐盛。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= SLIDE 8: 潛意識與審美力 ================= -->
+        <div id="slide-content-7" class="slide-block hidden space-y-6">
+          <div class="space-y-4 text-center">
+            <h3 class="font-serif font-bold text-2xl md:text-3xl text-cream-100">大腦 RAS 系統與審美溢價</h3>
+            <p class="text-sm md:text-base text-sand-500 max-w-3xl mx-auto">
+              大腦的「網狀激活系統（RAS）」是一個過濾器，它只允許你最熟悉、認同的訊息進入。如果你習慣低配、摩擦力重重的生活，它就會自動屏蔽輕鬆、高價值的機會。
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+            <div class="p-5 bg-sand-500/5 rounded-xl border border-sand/10 space-y-2">
+              <h4 class="font-serif text-cream-200 font-bold flex items-center gap-2">
+                <span class="text-terracotta-500">🎨</span> 審美是高溢價的生產力
+              </h4>
+              <p class="text-xs text-sand-500 leading-relaxed">
+                今天這個時代，利潤差價在於「體驗與情緒價值」。一輩子捨不得享受、粗糙生活的人，商業嗅覺是遲鈍的。因為自己從未體驗過頂級的美好，所以也創造不出讓人產生高級情緒共鳴的產品。你的審美水平，決定了你產品的天花板。
+              </p>
+            </div>
+
+            <div class="p-5 bg-sand-500/5 rounded-xl border border-sand/10 space-y-2">
+              <h4 class="font-serif text-cream-200 font-bold flex items-center gap-2">
+                <span class="text-terracotta-500">🌿</span> 身心氣血決定你的財運
+              </h4>
+              <p class="text-xs text-sand-500 leading-relaxed">
+                常年捨不得休養、透支身體的人氣血虧虛。生理狀態不佳時，會激活負責恐懼和焦慮的腦區。此時你極易急功近利、踏入盲目投資與破財的深坑。照顧好身體容器，才能承載得住真正的財富流動。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= SLIDE 9: 能量絕對止損 ================= -->
+        <div id="slide-content-8" class="slide-block hidden space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="space-y-4">
+              <h3 class="font-serif font-bold text-2xl md:text-3xl text-cream-100">富養自己：在能量上絕對止損</h3>
+              <p class="text-sm md:text-base text-sand-500 leading-relaxed">
+                人到中年，最致命的消耗不是體力勞動，而是<strong>「情緒勞動」</strong>。
+              </p>
+              <p class="text-sm md:text-base text-sand-500 leading-relaxed">
+                面對喜歡道德綁架的親戚、總在抱怨的朋友，或不斷製造麻煩的成年巨嬰，你若不懂拒絕，你的能量就會被吸得乾乾淨淨。這在世俗眼中可能叫冷酷，但這其實是對自己生命能量的高級保護。
+              </p>
+              <div class="p-4 bg-sage-500/10 rounded-xl border border-sage-500/20 text-xs">
+                <p class="text-sage-500 font-bold font-serif mb-1">阿德勒心理學：課題分離</p>
+                <p class="text-sand-500 leading-relaxed">
+                  別人過得慘不慘、情緒崩不崩潰，那是「別人的課題」；你選擇去不去承擔，那是「你的課題」。你不需要充當任何人的救世主。
+                </p>
+              </div>
+            </div>
+
+            <!-- 互動式：能量防禦牆 -->
+            <div class="bg-sand-500/5 p-6 rounded-2xl border border-sand/10 space-y-4">
+              <h4 class="text-xs font-bold tracking-widest text-terracotta-400 text-center">心靈防火牆：切斷情感消耗連結</h4>
+              
+              <div id="vampireGame" class="space-y-3">
+                <div class="flex justify-between items-center p-3 bg-charcoal/50 rounded border border-sand/10 transition-all duration-300" id="vamp-1">
+                  <div>
+                    <p class="text-xs font-bold text-cream-200">親戚的催婚、催生與指手畫腳</p>
+                    <p class="text-[10px] text-sand-600">不斷探聽隱私，對你的生活進行道德綁架</p>
+                  </div>
+                  <button onclick="blockVampire('vamp-1', 25)" class="px-2.5 py-1 bg-terracotta-500 hover:bg-terracotta-600 text-cream-100 text-[10px] rounded transition-all">一鍵屏蔽</button>
+                </div>
+
+                <div class="flex justify-between items-center p-3 bg-charcoal/50 rounded border border-sand/10 transition-all duration-300" id="vamp-2">
+                  <div>
+                    <p class="text-xs font-bold text-cream-200">酒肉朋友無底線的倒負能量與抱怨</p>
+                    <p class="text-[10px] text-sand-600">把你當作免費情緒垃圾桶，轉身輕鬆離去</p>
+                  </div>
+                  <button onclick="blockVampire('vamp-2', 25)" class="px-2.5 py-1 bg-terracotta-500 hover:bg-terracotta-600 text-cream-100 text-[10px] rounded transition-all">拒絕消耗</button>
+                </div>
+
+                <div class="flex justify-between items-center p-3 bg-charcoal/50 rounded border border-sand/10 transition-all duration-300" id="vamp-3">
+                  <div>
+                    <p class="text-xs font-bold text-cream-200">無底線的工作內卷與被迫應酬</p>
+                    <p class="text-[10px] text-sand-600">下班後仍在各個工作群裡疲於奔命、虛與委蛇</p>
+                  </div>
+                  <button onclick="blockVampire('vamp-3', 25)" class="px-2.5 py-1 bg-terracotta-500 hover:bg-terracotta-600 text-cream-100 text-[10px] rounded transition-all">切斷聯繫</button>
+                </div>
+              </div>
+
+              <!-- 復原按鈕 -->
+              <div class="text-center pt-2 hidden" id="vampResetContainer">
+                <button onclick="resetVampires()" class="text-xs text-sand-600 underline hover:text-terracotta-400">重置所有屏蔽牆</button>
+              </div>
+
+              <div class="space-y-1">
+                <div class="flex justify-between text-[11px]">
+                  <span class="text-sand-600">防火牆防禦強度：</span>
+                  <span id="firewallLevel" class="text-sage-500 font-bold">25% (基本防禦)</span>
+                </div>
+                <div class="w-full bg-charcoal h-2 rounded-full overflow-hidden">
+                  <div id="firewallBar" class="bg-sage-500 h-full transition-all duration-300" style="width: 25%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= SLIDE 10: 消費觀與關係情感撤退 ================= -->
+        <div id="slide-content-9" class="slide-block hidden space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="space-y-4">
+              <h3 class="font-serif font-bold text-2xl md:text-3xl text-cream-100">重整消費觀與情感撤退</h3>
+              <p class="text-sm md:text-base text-sand-500 leading-relaxed font-serif italic">
+                「真正的富足，不是消費主義包裝出來的奢華面子，而是去購買『降低生命摩擦係數』、提升時間自由的東西。」
+              </p>
+              <p class="text-xs md:text-sm text-sand-500 leading-relaxed">
+                買一台洗碗機省下與伴侶爭吵的時間；買一張高支撐力的床墊買回深度睡眠。同時在親密關係中實施<strong>「情感撤退」</strong>：放下對伴侶、孩子的完美期待值。不報高期待，就沒有內耗與傷害。
+              </p>
+            </div>
+
+            <!-- 關係期待值與天平內耗計算機 -->
+            <div class="bg-sand-500/5 p-6 rounded-2xl border border-sand/10 space-y-4">
+              <h4 class="text-xs font-bold tracking-widest text-terracotta-400 text-center">親密關係期待天平</h4>
+              
+              <!-- 天平 SVG (動態傾斜) -->
+              <div class="flex justify-center py-2">
+                <svg id="balanceScale" class="w-48 h-28" viewBox="0 0 120 70" xmlns="http://www.w3.org/2000/svg">
+                  <!-- 支架 -->
+                  <line x1="60" y1="10" x2="60" y2="65" stroke="#C2AD96" stroke-width="4"/>
+                  <path d="M50 65 L70 65" stroke="#C2AD96" stroke-width="3" stroke-linecap="round"/>
+                  <!-- 衡桿與托盤 (動態變換) -->
+                  <g id="balanceBeam" class="transition-transform duration-500 origin-center" style="transform: rotate(15deg);">
+                    <line x1="20" y1="30" x2="100" y2="30" stroke="#C2AD96" stroke-width="3"/>
+                    <!-- 左盤 (自我寧靜) -->
+                    <line x1="20" y1="30" x2="20" y2="50" stroke="#7F6B55" stroke-width="1.5"/>
+                    <path d="M10 50 Q20 55 30 50 Z" fill="#6E7E75"/>
+                    <!-- 右盤 (對他人的期待痛楚) -->
+                    <line x1="100" y1="30" x2="100" y2="50" stroke="#7F6B55" stroke-width="1.5"/>
+                    <path d="M90 50 Q100 55 110 50 Z" fill="#7C3E2F"/>
+                  </g>
+                </svg>
+              </div>
+
+              <div class="space-y-3">
+                <div class="space-y-1">
+                  <div class="flex justify-between text-xs">
+                    <span>完美期待值（逼迫/改造對方）：</span>
+                    <span id="expectValue" class="text-terracotta-500 font-bold">100%</span>
+                  </div>
+                  <input type="range" id="expectSlider" min="0" max="100" value="100" oninput="calculatePain(this.value)" class="w-full accent-terracotta-500">
+                </div>
+
+                <div class="p-3 bg-charcoal rounded-xl border border-sand/10 text-center" id="painPanel">
+                  <p class="text-xs text-sand-600">你的心靈痛苦係數：</p>
+                  <p class="text-xl font-serif font-bold text-red-500" id="painIndex">9.5 / 10</p>
+                  <p class="text-[10px] text-sand-500 mt-1 leading-relaxed" id="painAnalysis">
+                    「極度焦慮，天天因為伴侶不理解或小孩不合己意而氣血上湧。」
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= SLIDE 11: 精神結界與正念 ================= -->
+        <div id="slide-content-10" class="slide-block hidden space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="space-y-4">
+              <h3 class="font-serif font-bold text-2xl md:text-3xl text-cream-100">搭建純粹無用的精神結界</h3>
+              <p class="text-sm md:text-base text-sand-500 leading-relaxed">
+                人到中年，最悲哀的莫過於失去自我的本體。你是員工、兒女、配偶、家長，總在盡責、付出、兜底，卻唯獨沒有你自己。
+              </p>
+              <p class="text-sm md:text-base text-sand-500 leading-relaxed">
+                你需要一塊任誰也無法侵入的<strong>「無用精神結界」</strong>——不為了賺錢，純粹因好玩而做的一件事：釣魚、拼樂高、閱讀冷門歷史、臨摹古字。這在道家思想中叫「無用之用，方為大用」。
+              </p>
+            </div>
+
+            <!-- 互動式：10秒正念呼吸器 (荷花綻放 SVG 交互) -->
+            <div class="bg-sand-500/5 p-6 rounded-2xl border border-sand/10 flex flex-col items-center justify-center space-y-5 min-h-[320px]">
+              <h4 class="text-xs font-bold tracking-widest text-terracotta-400">正念放鬆：體驗 10 秒心流結界</h4>
+              
+              <!-- 禪意動態荷花 SVG -->
+              <div class="relative w-36 h-36 flex items-center justify-center">
+                <!-- 動態呼吸環 -->
+                <div id="breatheRing" class="absolute inset-0 rounded-full bg-terracotta-500/5 border border-terracotta-500/20 transition-all duration-1000 ease-in-out"></div>
+                <!-- 荷花 SVG -->
+                <svg id="zenLotus" class="w-24 h-24 text-terracotta-400 transition-all duration-1000 ease-in-out origin-center" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- 荷花葉片瓣 -->
+                  <path d="M50 15 C40 35 30 45 50 85 C70 45 60 35 50 15 Z" fill="currentColor" fill-opacity="0.2" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M50 25 C30 45 25 60 50 85 C75 60 70 45 50 25 Z" fill="currentColor" fill-opacity="0.3" stroke="currentColor" stroke-width="1.2"/>
+                  <path d="M50 35 C20 55 15 70 50 85 C85 70 80 55 50 35 Z" fill="currentColor" fill-opacity="0.4" stroke="currentColor" stroke-width="1"/>
+                  <circle cx="50" cy="75" r="5" fill="#EAE1D7"/>
+                </svg>
+                <div class="absolute text-center z-10">
+                  <span id="breathTimer" class="font-serif text-2xl font-bold text-cream-100">10s</span>
+                  <p id="breathGuide" class="text-[10px] text-sand-500">放鬆坐下</p>
+                </div>
+              </div>
+
+              <button id="breathBtn" onclick="startBreathingExercise()" class="px-6 py-2 bg-terracotta-600 hover:bg-terracotta-700 text-cream-100 rounded-full text-xs transition-all tracking-wider font-bold">開啟心靈結界</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= SLIDE 12: 允許一切發生 ================= -->
+        <div id="slide-content-11" class="slide-block hidden space-y-6">
+          <div class="space-y-4 text-center">
+            <h3 class="font-serif font-black text-2xl md:text-3xl text-cream-100">最後的生命總開關：允許一切發生</h3>
+            <p class="text-sm md:text-base text-sand-500 max-w-3xl mx-auto">
+              真正的臣服與接納不是消極躺平，而是深刻洞察局限性與無常後，停止與現實較勁。
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+            <div class="p-6 bg-charcoal border border-sand/20 rounded-2xl space-y-3">
+              <h4 class="font-serif font-bold text-cream-200 flex items-center gap-2">
+                <span>🌻</span> 心靈氧氣面罩法則
+              </h4>
+              <p class="text-xs text-sand-500 leading-relaxed">
+                飛機上的安全指引非常明確：<strong>先為自己戴好氧氣面罩，再幫助身邊的人。</strong>
+              </p>
+              <p class="text-xs text-sand-500 leading-relaxed">
+                一個自己都在窒息、每天充滿怨氣的中年人，幫不了任何人，也帶不給家庭幸福。只有你自己先被充足的愛與美好灌溉透了，你身邊的人才能如沐春風。
+              </p>
+            </div>
+
+            <div class="p-6 bg-charcoal border border-sand/20 rounded-2xl space-y-3">
+              <h4 class="font-serif font-bold text-cream-200 flex items-center gap-2">
+                <span>🕯️</span> 2026 實踐宣告
+              </h4>
+              <p class="text-xs text-sand-500 leading-relaxed">
+                這世界財富與好運的分配，從不按誰受苦、受累、委屈多來計算，它只回應你的喜悅震動頻率。
+              </p>
+              <p class="text-xs text-terracotta-400 font-semibold font-serif italic">
+                「今天起，放肆享受生活。一杯用心準備的咖啡、一束鮮花、一次無目的的散步。不要為自我愛護感到半分內疚，因為你活著，就本該配得世間一切美好。」
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 底部控制導航 -->
+      <div class="flex items-center justify-between border-t border-sand/10 pt-6 mt-6 z-10">
+        <button id="prevBtn" onclick="prevSlide()" class="px-4 py-2 text-xs rounded border border-sand/30 hover:bg-sand/10 disabled:opacity-30 disabled:pointer-events-none transition-all text-cream-100">
+          ← 上一頁
+        </button>
+
+        <!-- 滑動原點指示器 -->
+        <div class="flex items-center gap-1.5" id="slideDots">
+          <!-- JS 動態生成 -->
+        </div>
+
+        <button id="nextBtn" onclick="nextSlide()" class="px-4 py-2 text-xs rounded bg-terracotta-600 hover:bg-terracotta-700 transition-all text-cream-100 font-bold">
+          下一頁 →
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- 底部版權 -->
+  <footer class="text-center py-4 text-[10px] text-sand-600 tracking-widest border-t border-sand/10 bg-charcoal">
+    THE NAVAL PHILOSOPHY APPLIED DECK FOR 2026 • DESIGNED INDEPENDENTLY • NO BROKEN IMAGES
+  </footer>
+
+  <script>
+    // 12頁投影片數據配置
+    const slideData = [
+      { cat: "2026 投資自己・接納自我之道", progress: "01 / 12" },
+      { cat: "2026 投資自己：心靈蓄水", progress: "02 / 12" },
+      { cat: "2026 投資自己：專注力高牆", progress: "03 / 12" },
+      { cat: "2026 投資自己：無競爭之路", progress: "04 / 12" },
+      { cat: "打破匱乏思維：潛意識代碼", progress: "05 / 12" },
+      { cat: "打破匱乏思維：喜悅共振", progress: "06 / 12" },
+      { cat: "打破匱乏思維：粉碎吃苦崇拜", progress: "07 / 12" },
+      { cat: "打破匱乏思維：審美價值與體質", progress: "08 / 12" },
+      { cat: "靜靜富養自己：能量絕對止損", progress: "09 / 12" },
+      { cat: "靜靜富養自己：降級期望撤退", progress: "10 / 12" },
+      { cat: "靜靜富養自己：無用之美", progress: "11 / 12" },
+      { cat: "靜靜富養自己：臣服與發光", progress: "12 / 12" }
+    ];
+
+    let currentSlide = 0;
+    const totalSlides = 12;
+    let isLightMode = false;
+
+    // 初始化
+    window.onload = function() {
+      generateDots();
+      updateSlideDisplay();
+      // 監聽鍵盤左右方向鍵
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'ArrowLeft') prevSlide();
+        if (event.key === 'ArrowRight') nextSlide();
+      });
+    }
+
+    // 投影片切換核心函數
+    function goToSlide(slideIndex) {
+      if (slideIndex < 0 || slideIndex >= totalSlides) return;
+      
+      // 隱藏當前頁，顯示新頁
+      document.getElementById(`slide-content-${currentSlide}`).classList.add('hidden');
+      document.getElementById(`slide-content-${slideIndex}`).classList.remove('hidden');
+      
+      // 更新狀態
+      currentSlide = slideIndex;
+      updateSlideDisplay();
+
+      // 關閉側邊欄
+      closeSidebar();
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        goToSlide(currentSlide - 1);
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        goToSlide(currentSlide + 1);
+      }
+    }
+
+    // 更新投影片頁面資訊與 UI 控制
+    function updateSlideDisplay() {
+      // 分類標題與頁數
+      document.getElementById('slideCategory').innerText = slideData[currentSlide].cat;
+      document.getElementById('slideProgress').innerText = slideData[currentSlide].progress;
+
+      // 按鈕狀態控制
+      document.getElementById('prevBtn').disabled = (currentSlide === 0);
+      
+      const nextBtn = document.getElementById('nextBtn');
+      if (currentSlide === totalSlides - 1) {
+        nextBtn.innerText = "完成宣告";
+        nextBtn.onclick = function() { showFinishCelebration(); };
+      } else {
+        nextBtn.innerText = "下一頁 →";
+        nextBtn.onclick = nextSlide;
+      }
+
+      // 更新進度條指示點
+      for (let i = 0; i < totalSlides; i++) {
+        const dot = document.getElementById(`dot-${i}`);
+        if (dot) {
+          if (i === currentSlide) {
+            dot.classList.add('bg-terracotta-500', 'w-6');
+            dot.classList.remove('bg-sand-500/30', 'w-2');
+          } else {
+            dot.classList.add('bg-sand-500/30', 'w-2');
+            dot.classList.remove('bg-terracotta-500', 'w-6');
+          }
+        }
+        
+        // 更新側邊欄文字選中狀態
+        const navItem = document.getElementById(`nav-${i}`);
+        if (navItem) {
+          if (i === currentSlide) {
+            navItem.classList.add('text-terracotta-400', 'bg-terracotta-500/10', 'font-bold');
+            navItem.classList.remove('text-sand-500');
+          } else {
+            navItem.classList.remove('text-terracotta-400', 'bg-terracotta-500/10', 'font-bold');
+            navItem.classList.add('text-sand-500');
+          }
+        }
+      }
+    }
+
+    // 動態指示點生成
+    function generateDots() {
+      const dotsContainer = document.getElementById('slideDots');
+      dotsContainer.innerHTML = '';
+      for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('button');
+        dot.id = `dot-${i}`;
+        dot.className = "h-2 rounded-full transition-all duration-300";
+        dot.onclick = (function(index) {
+          return function() { goToSlide(index); };
+        })(i);
+        dotsContainer.appendChild(dot);
+      }
+    }
+
+    // 側邊欄控制
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      sidebar.classList.toggle('-translate-x-full');
+      overlay.classList.toggle('hidden');
+    }
+
+    function closeSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      sidebar.classList.add('-translate-x-full');
+      overlay.classList.add('hidden');
+    }
+
+    // 淺色與暗色系切換
+    function toggleLightDark() {
+      isLightMode = !isLightMode;
+      const body = document.body;
+      const stage = document.getElementById('slideStage');
+      const header = document.querySelector('header');
+      const sidebar = document.getElementById('sidebar');
+      const themeIcon = document.getElementById('themeIcon');
+      const themeText = document.getElementById('themeText');
+
+      if (isLightMode) {
+        // 切換為沙石奶油暖白
+        body.classList.remove('bg-charcoal', 'text-cream-100');
+        body.classList.add('bg-cream-200', 'text-charcoal');
+        
+        stage.classList.remove('bg-charcoal', 'border-sand/20');
+        stage.classList.add('bg-cream-50', 'border-sand-500/40');
+        
+        header.classList.remove('bg-charcoal');
+        header.classList.add('bg-cream-100', 'border-sand-500/20');
+        
+        sidebar.classList.remove('bg-charcoal');
+        sidebar.classList.add('bg-cream-50');
+
+        themeIcon.innerText = "🌙";
+        themeText.innerText = "禪意暗色";
+        themeText.classList.remove('text-cream-100');
+        themeText.classList.add('text-charcoal');
+      } else {
+        // 切換為經典暗色
+        body.classList.remove('bg-cream-200', 'text-charcoal');
+        body.classList.add('bg-charcoal', 'text-cream-100');
+        
+        stage.classList.remove('bg-cream-50', 'border-sand-500/40');
+        stage.classList.add('bg-charcoal', 'border-sand/20');
+        
+        header.classList.remove('bg-cream-100', 'border-sand-500/20');
+        header.classList.add('bg-charcoal');
+        
+        sidebar.classList.remove('bg-cream-50');
+        sidebar.classList.add('bg-charcoal');
+
+        themeIcon.innerText = "☀️";
+        themeText.innerText = "禪意淺色";
+        themeText.classList.remove('text-charcoal');
+        themeText.classList.add('text-cream-100');
+      }
+    }
+
+    // ====== 互動模組一：極度豐盛之杯 ======
+    function updateAbundanceCup(val) {
+      const waterRect = document.getElementById('waterRect');
+      const label = document.getElementById('cupLabel');
+      const valueSpan = document.getElementById('abundanceValue');
+      const verdict = document.getElementById('cupVerdict');
+
+      // 水位 SVG 的 y 座標控制 (150 為杯底，10 為杯頂滿水)
+      const targetY = 150 - (val * 1.3);
+      waterRect.setAttribute('y', targetY);
+      valueSpan.innerText = val + '%';
+
+      if (val < 40) {
+        label.innerHTML = `<span class="text-cream-100 bg-charcoal/40 px-2 py-0.5 rounded">${val}% 極度匱乏</span>`;
+        verdict.innerText = "狀態：身心完全乾枯。此時給予外界的愛，往往是帶有強烈索取欲的情緒高利貸。";
+        verdict.className = "text-xs text-center text-red-400 transition-all";
+      } else if (val < 80) {
+        label.innerHTML = `<span class="text-cream-100 bg-charcoal/40 px-2 py-0.5 rounded">${val}% 自我滋養</span>`;
+        verdict.innerText = "狀態：開始補水。有意識守護自我能量，開始能夠自我調整與療癒。";
+        verdict.className = "text-xs text-center text-sand-600 transition-all";
+      } else {
+        label.innerHTML = `<span class="text-cream-100 bg-charcoal/40 px-2 py-0.5 rounded font-bold">${val}% 自我溢出</span>`;
+        verdict.innerText = "狀態：能量極度豐盛。此時你的愛與奉獻是滿溢出來的無條件給予，毫無委屈。";
+        verdict.className = "text-xs text-center text-sage-500 font-bold transition-all";
+      }
+    }
+
+    // ====== 互動模組二：注意力防禦度與城堡吊橋 ======
+    function updateShield() {
+      const chks = document.querySelectorAll('.shield-chk');
+      let checkedCount = 0;
+      chks.forEach(chk => {
+        if (chk.checked) checkedCount++;
+      });
+
+      const hp = Math.round(checkedCount * 33.3);
+      const hpText = document.getElementById('shieldHp');
+      const bar = document.getElementById('shieldBar');
+      const bridge = document.getElementById('castleBridge');
+      const shieldCircle = document.getElementById('shieldCircle');
+
+      bar.style.width = (checkedCount * 33.3) + '%';
+      
+      // 控制 SVG 吊橋角度 (0度代表平放放行，-75度代表拉起防禦)
+      const rotateAngle = checkedCount * -25;
+      bridge.style.transform = `rotate(${rotateAngle}deg)`;
+
+      if (checkedCount === 0) {
+        hpText.innerText = "0% (吊橋放平)";
+        hpText.className = "text-red-400 font-bold";
+        shieldCircle.style.opacity = "0.1";
+        shieldCircle.setAttribute("stroke", "#7F6B55");
+      } else if (checkedCount < 3) {
+        hpText.innerText = hp + "% (護城河防禦中)";
+        hpText.className = "text-sand-600 font-bold";
+        shieldCircle.style.opacity = "0.4";
+        shieldCircle.setAttribute("stroke", "#D9917D");
+      } else {
+        hpText.innerText = "100% (金境結界成立)";
+        hpText.className = "text-sage-500 font-bold";
+        shieldCircle.style.opacity = "1";
+        shieldCircle.setAttribute("stroke", "#6E7E75");
+      }
+    }
+
+    // ====== 互動模組三：大腦默認代碼升級 ======
+    function upgradeCodeProgress() {
+      const chks = document.querySelectorAll('.code-chk');
+      let checkedCount = 0;
+      chks.forEach(chk => {
+        if (chk.checked) checkedCount++;
+      });
+
+      const progress = checkedCount * 25;
+      const percentText = document.getElementById('codePercent');
+      const bar = document.getElementById('codeBar');
+      const output = document.getElementById('codeOutput');
+
+      bar.style.width = progress + '%';
+
+      if (progress === 0) {
+        percentText.innerText = "0% (匱乏頻率)";
+        percentText.className = "text-red-400 font-bold";
+        output.innerText = "大腦正在重複廉價、將就、緊繃的舊軟體程式...";
+      } else if (progress < 100) {
+        percentText.innerText = progress + "% (代碼重寫中)";
+        percentText.className = "text-sand-600 font-bold";
+        output.innerText = "過濾器重構中... 你正緩緩向大腦證明：「我配得上美好事物。」";
+      } else {
+        percentText.innerText = "100% (高配默認常規)";
+        percentText.className = "text-terracotta-500 font-bold";
+        output.innerText = "大腦重置成功！你已心安理得接受美好的流動，財富磁場全力運轉！";
+      }
+    }
+
+    // ====== 互動模組四：能量吸血鬼屏蔽牆 ======
+    let blockedCount = 0;
+    function blockVampire(id, weight) {
+      const element = document.getElementById(id);
+      element.style.opacity = '0.2';
+      element.style.pointerEvents = 'none';
+      element.classList.add('line-through', 'border-sage-500/20');
+      
+      const currentBar = document.getElementById('firewallBar');
+      const currentText = document.getElementById('firewallLevel');
+      
+      blockedCount++;
+      const val = 25 + (blockedCount * 25);
+      
+      currentBar.style.width = val + '%';
+      
+      if (val < 100) {
+        currentText.innerText = val + "% (屏蔽干擾中)";
+        currentText.className = "text-sand-600 font-bold";
+      } else {
+        currentText.innerText = "100% (極致止損完成)";
+        currentText.className = "text-sage-500 font-bold";
+        document.getElementById('vampResetContainer').classList.remove('hidden');
+      }
+    }
+
+    function resetVampires() {
+      blockedCount = 0;
+      document.getElementById('vampResetContainer').classList.add('hidden');
+      
+      const ids = ['vamp-1', 'vamp-2', 'vamp-3'];
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        el.style.opacity = '1';
+        el.style.pointerEvents = 'auto';
+        el.classList.remove('line-through', 'border-sage-500/20');
+      });
+
+      document.getElementById('firewallBar').style.width = '25%';
+      document.getElementById('firewallLevel').innerText = "25% (基本防禦)";
+      document.getElementById('firewallLevel').className = "text-sage-500 font-bold";
+    }
+
+    // ====== 互動模組五：期望與天平傾斜計算機 ======
+    function calculatePain(val) {
+      const expText = document.getElementById('expectValue');
+      const painIndex = document.getElementById('painIndex');
+      const painAnalysis = document.getElementById('painAnalysis');
+      const painPanel = document.getElementById('painPanel');
+      const balanceBeam = document.getElementById('balanceBeam');
+
+      expText.innerText = val + '%';
+
+      // 控制天平偏轉角度：期望值 100% -> 傾斜 20度， 0% -> 反向傾斜 -15度
+      const angle = -15 + (val * 0.35);
+      balanceBeam.style.transform = `rotate(${angle}deg)`;
+
+      if (val > 80) {
+        painIndex.innerText = "9.5 / 10 (重度焦慮)";
+        painIndex.className = "text-xl font-serif font-bold text-red-500";
+        painAnalysis.innerText = "極度控制欲！強求伴侶與孩子百分之百順從己意，將自己與家人推入窒息爭吵的深淵。";
+        painPanel.style.backgroundColor = 'rgba(239, 68, 68, 0.05)';
+      } else if (val > 40) {
+        painIndex.innerText = "5.0 / 10 (時常內耗)";
+        painIndex.className = "text-xl font-serif font-bold text-terracotta-500";
+        painAnalysis.innerText = "中度情緒摩擦。雖然懂得一些道理，但仍容易因為對方的無作為感到失落。";
+        painPanel.style.backgroundColor = 'rgba(201, 122, 100, 0.05)';
+      } else if (val > 0) {
+        painIndex.innerText = "2.0 / 10 (心神安適)";
+        painIndex.className = "text-xl font-serif font-bold text-sage-500";
+        painAnalysis.innerText = "情感軟著陸！不再執著改造，僅視為同行戰友，有驚喜當然好，無作為也心寬。";
+        painPanel.style.backgroundColor = 'rgba(110, 126, 117, 0.05)';
+      } else {
+        painIndex.innerText = "0.0 / 10 (情感無痛)";
+        painIndex.className = "text-xl font-serif font-bold text-emerald-500";
+        painAnalysis.innerText = "徹底解脫！不再對任何人抱不切實際的幻想，焦點回歸自身，內心獲得無限寧靜。";
+        painPanel.style.backgroundColor = 'rgba(16, 185, 129, 0.05)';
+      }
+    }
+
+    // ====== 互動模組六：荷花呼吸正念計時 ======
+    let breathInterval = null;
+    let breathCount = 10;
+    let breathStage = "吸氣";
+
+    function startBreathingExercise() {
+      const btn = document.getElementById('breathBtn');
+      const timer = document.getElementById('breathTimer');
+      const guide = document.getElementById('breathGuide');
+      const ring = document.getElementById('breatheRing');
+      const lotus = document.getElementById('zenLotus');
+
+      if (breathInterval) {
+        clearInterval(breathInterval);
+        breathInterval = null;
+        btn.innerText = "開啟心靈結界";
+        timer.innerText = "10s";
+        guide.innerText = "放鬆坐下";
+        ring.style.transform = 'scale(1)';
+        lotus.style.transform = 'scale(1)';
+        return;
+      }
+
+      breathCount = 10;
+      breathStage = "緩緩吸氣...";
+      btn.innerText = "結束體驗";
+      timer.innerText = "10s";
+      guide.innerText = breathStage;
+      
+      // 吸氣動效：荷花與光環擴張
+      ring.style.transform = 'scale(1.3)';
+      lotus.style.transform = 'scale(1.4)';
+
+      breathInterval = setInterval(() => {
+        breathCount--;
+        timer.innerText = breathCount + "s";
+
+        if (breathCount === 5) {
+          breathStage = "均勻呼氣...";
+          guide.innerText = breathStage;
+          // 呼氣動效：荷花與光環收縮
+          ring.style.transform = 'scale(1)';
+          lotus.style.transform = 'scale(0.95)';
+        }
+
+        if (breathCount <= 0) {
+          clearInterval(breathInterval);
+          breathInterval = null;
+          btn.innerText = "再次開啟結界";
+          timer.innerText = "圓滿";
+          guide.innerText = "副交感神經已獲得滋養";
+          ring.style.transform = 'scale(1)';
+          lotus.style.transform = 'scale(1)';
+        }
+      }, 1000);
+    }
+
+    // ====== 結尾驚喜：完成宣告儀式 ======
+    function showFinishCelebration() {
+      const slideStage = document.getElementById('slideStage');
+      slideStage.innerHTML = `
+        <div class="text-center space-y-6 py-12 transition-all duration-1000" id="finalBanner">
+          <div class="flex justify-center">
+            <svg class="w-24 h-24 text-terracotta-500 animate-bounce" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2"/>
+              <path d="M35 50L45 60L65 40" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h2 class="font-serif font-black text-3xl md:text-5xl text-cream-100">你的 2026 心靈程式升級完畢</h2>
+          <p class="text-sm md:text-base text-sand-500 max-w-2xl mx-auto leading-relaxed">
+            「財富不回應你的辛勞與委屈，它只回應你的震動頻率。當你心安理得地享受生活，錢只不過是喜悅生命的副產品。」
+          </p>
+          <div class="pt-4">
+            <button onclick="location.reload()" class="px-8 py-3 bg-terracotta-600 hover:bg-terracotta-700 text-cream-100 rounded-full font-bold text-sm tracking-widest transition-all">
+              重新溫習大腦演算法
+            </button>
+          </div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

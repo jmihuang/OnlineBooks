@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 納瓦爾：自我富養與財富演算法</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Tailwind Config for Theme -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        stone: {
+                            50: '#FAF8F5',
+                            100: '#F5F0E6',
+                            200: '#EAE1D1',
+                            800: '#4A4238',
+                            900: '#322C25',
+                        },
+                        accent: {
+                            light: '#C4A484',
+                            DEFAULT: '#9A7B5E',
+                            dark: '#7A624A',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'Georgia', 'serif'],
+                        sans: ['"Noto Sans TC"', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles for Interactive Elements & Chart Containers */
+        body {
+            background-color: #FAF8F5;
+            color: #322C25;
+            overflow-x: hidden;
+        }
+
+        /* Chart Container Styling - Mandatory Requirements */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 40vh;
+            max-height: 400px;
+            min-height: 300px;
+        }
+
+        /* Hide scrollbar for clean aesthetic */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F5F0E6; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C4A484; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9A7B5E; 
+        }
+
+        /* Interactive Card Hover Effects */
+        .rule-card {
+            transition: all 0.3s ease;
+        }
+        .rule-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(154, 123, 94, 0.2);
+            border-color: #C4A484;
+        }
+
+        /* Custom Range Slider */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #9A7B5E;
+            cursor: pointer;
+            margin-top: -8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #EAE1D1;
+            border-radius: 2px;
+        }
+        
+        /* Fade in animation */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out forwards;
+            opacity: 0;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased leading-relaxed">
+
+    <!-- Chosen Palette: Warm Neutrals (Stone & Muted Amber/Brown) for a calming, harmonious, and philosophical aesthetic. -->
+    
+    <!-- Application Structure Plan: 
+    The SPA is structured as a "Life & Wealth OS Dashboard". It deviates from the linear reading format of the reports to create an exploratory, self-reflective experience.
+    1. Hero: Introduces the core concept of 2026 self-investment.
+    2. Mindset Comparison (Radar Chart): Visually contrasts the "Scarcity/Victim" mindset with the "Abundance/Relaxed" mindset, instantly showing the user their potential growth areas.
+    3. The 14 Rules Grid (Text/Cards): Synthesizes the 7 Wealth Rules and 7 Self-Nourishing Rules into an interactive grid where users click to reveal the "shifts" in perspective.
+    4. Energy Shield Simulator (Interactive Sliders & Bar Chart): A hands-on tool translating the "Energy Leaks / Boundaries" concept into a visual gauge. Users adjust sliders (e.g., toxic relationships) to see their "Inner Peace/Wealth Capacity" increase.
+    5. Action Plan Checklist: A practical, interactive checklist for immediate application.
+    This structure supports active learning: users see the theory, interact with their own mental models, and end with actionable steps.
+    -->
+
+    <!-- Visualization & Content Choices: 
+    1. Goal: Compare Scarcity vs. Abundance mindsets. Viz: Radar Chart (Chart.js). Interaction: Hover tooltips. Justification: Shows multi-dimensional shifts (Energy, Aesthetics, Deservingness) simultaneously. Library: Chart.js (NO SVG).
+    2. Goal: Organize the 14 core rules. Viz: Interactive CSS Grid Cards. Interaction: Click/Hover to reveal insights. Justification: Makes dense philosophical text digestible. Method: Vanilla JS + Tailwind (NO SVG).
+    3. Goal: Demonstrate "Energy Stop-Loss" and the "Cup Metaphor". Viz: Horizontal Bar Chart + Range Sliders. Interaction: Moving sliders updates the chart in real-time. Justification: Makes the abstract concept of "Emotional Labor" and "Energy Boundaries" tangible. Library: Chart.js + Vanilla JS (NO SVG).
+    -->
+
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. All visual elements are HTML/CSS shapes, Unicode emojis, or Canvas (Chart.js). -->
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-stone-50/90 backdrop-blur-md z-50 border-b border-stone-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <span class="text-2xl">☕</span>
+                    <span class="font-serif font-bold text-stone-900 tracking-wider">Naval OS</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#mindset" class="text-stone-600 hover:text-accent font-medium transition-colors">思維重構</a>
+                    <a href="#rules" class="text-stone-600 hover:text-accent font-medium transition-colors">底層邏輯</a>
+                    <a href="#energy" class="text-stone-600 hover:text-accent font-medium transition-colors">能量護城河</a>
+                    <a href="#action" class="text-stone-600 hover:text-accent font-medium transition-colors">實踐指南</a>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-stone-600 hover:text-stone-900 focus:outline-none">
+                        <span class="text-2xl">☰</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-stone-50 border-b border-stone-200 absolute w-full">
+            <a href="#mindset" class="block px-4 py-3 text-stone-600 border-b border-stone-100">思維重構</a>
+            <a href="#rules" class="block px-4 py-3 text-stone-600 border-b border-stone-100">底層邏輯</a>
+            <a href="#energy" class="block px-4 py-3 text-stone-600 border-b border-stone-100">能量護城河</a>
+            <a href="#action" class="block px-4 py-3 text-stone-600">實踐指南</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto text-center fade-in">
+        <span class="text-accent font-bold tracking-widest text-sm uppercase mb-4 block">2026 年，投資你自己</span>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-stone-900 leading-tight mb-6">
+            接納自我：<br>拆掉匱乏思維，重建豐盛磁場
+        </h1>
+        <p class="mt-4 max-w-2xl mx-auto text-lg text-stone-600 leading-relaxed">
+            一個人在賺錢這件事上有多難，本質上不取決於他有多努力，而取決於他有多「鬆」。<br>
+            卸下半生枷鎖，掌握靜靜富養自己的底層邏輯，拿回人生的絕對控制權。
+        </p>
+        <div class="mt-10">
+            <a href="#mindset" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-accent hover:bg-accent-dark transition-all duration-300 shadow-lg hover:shadow-xl">
+                開始系統升級 🡓
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 space-y-32">
+
+        <!-- Section 1: Mindset Comparison (Radar Chart) -->
+        <section id="mindset" class="scroll-mt-24 fade-in" style="animation-delay: 0.2s;">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-serif font-bold text-stone-900 mb-4">緊繃與鬆弛的財富分水嶺</h2>
+                <p class="text-stone-600 max-w-3xl mx-auto">
+                    這個區塊對比了「窮人匱乏思維」與「納瓦爾豐盛思維」在五個核心維度的差異。真正的財富與幸福，取決於你大腦預設的「作業系統」版本。觀察雷達圖，了解你目前的能量分佈，並思考如何向外擴張。
+                </p>
+            </div>
+            
+            <div class="bg-white rounded-3xl shadow-xl p-6 sm:p-10 border border-stone-100 flex flex-col lg:flex-row items-center gap-12">
+                <div class="w-full lg:w-1/2">
+                    <div class="chart-container">
+                        <canvas id="mindsetRadarChart"></canvas>
+                    </div>
+                </div>
+                <div class="w-full lg:w-1/2 space-y-6">
+                    <div class="bg-stone-50 p-6 rounded-2xl border-l-4 border-stone-300">
+                        <h3 class="text-xl font-bold text-stone-800 mb-2">❌ 假富養（匱乏/緊繃狀態）</h3>
+                        <p class="text-stone-600 text-sm">
+                            源於內心的匱乏與焦慮，企圖透過外部標籤（盲目消費奢侈品）向他人證明自己的價值。處於低能量層級，散發「飢渴感」，機會與貴人自動繞開。
+                        </p>
+                    </div>
+                    <div class="bg-stone-50 p-6 rounded-2xl border-l-4 border-accent">
+                        <h3 class="text-xl font-bold text-stone-800 mb-2">✨ 真富養（豐盛/鬆弛狀態）</h3>
+                        <p class="text-stone-600 text-sm">
+                            深於心靈的全面整合。在自身能力範圍內坦然滋養身心，具備高強度的「配得感」。處於喜悅同頻共振狀態，直覺敏銳，財富與資源主動流向你。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: 14 Rules of Life & Wealth (Grid) -->
+        <section id="rules" class="scroll-mt-24 fade-in">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-serif font-bold text-stone-900 mb-4">人生與財富的底層邏輯</h2>
+                <p class="text-stone-600 max-w-3xl mx-auto">
+                    綜合了《納瓦爾寶典》與中年自我富養的核心精華。我們整理出關鍵的思維轉變。點擊下方卡片，探索如何透過「向內審視」來重構你的生活模式，擺脫世俗的吃苦崇拜。
+                </p>
+            </div>
+
+            <!-- Tab Buttons -->
+            <div class="flex justify-center gap-4 mb-8">
+                <button onclick="switchTab('wealth')" id="tab-wealth" class="px-6 py-2 rounded-full font-bold bg-accent text-white transition-colors">財富規律 (7)</button>
+                <button onclick="switchTab('life')" id="tab-life" class="px-6 py-2 rounded-full font-bold bg-stone-200 text-stone-600 hover:bg-stone-300 transition-colors">中年富養 (7)</button>
+            </div>
+
+            <!-- Wealth Rules Grid -->
+            <div id="grid-wealth" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Cards will be populated by JS -->
+            </div>
+
+            <!-- Life Rules Grid -->
+            <div id="grid-life" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+                <!-- Cards will be populated by JS -->
+            </div>
+        </section>
+
+        <!-- Section 3: Energy Shield & Capacity (Interactive Charts) -->
+        <section id="energy" class="scroll-mt-24 fade-in">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-serif font-bold text-stone-900 mb-4">能量護城河與杯子理論</h2>
+                <p class="text-stone-600 max-w-3xl mx-auto">
+                    「你無法從空杯子裡倒出水。」人際關係中的「情緒勞動」是消耗生命能量最大的黑洞。這個區塊允許你互動調整生活中的「能量漏水點」（如道德綁架、過度期待），觀察它們如何直接影響你接納財富與平靜的「容器容量」。
+                </p>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-xl p-6 sm:p-10 border border-stone-100 flex flex-col lg:flex-row gap-12">
+                
+                <!-- Controls -->
+                <div class="w-full lg:w-1/2 flex flex-col justify-center space-y-8">
+                    <h3 class="text-xl font-bold text-stone-800">建立高維認知屏蔽 (絕對止損)</h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium text-stone-700">🛡️ 屏蔽道德綁架與負能量親友</span>
+                                <span id="val-toxic" class="text-sm font-bold text-accent">50%</span>
+                            </div>
+                            <input type="range" id="slider-toxic" min="0" max="100" value="50" oninput="updateEnergyChart()">
+                            <p class="text-xs text-stone-500 mt-1">降低數值代表切斷低質量、單向消耗的社交羈絆。</p>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium text-stone-700">📉 降低對親密關係/孩子的執念期待</span>
+                                <span id="val-expect" class="text-sm font-bold text-accent">50%</span>
+                            </div>
+                            <input type="range" id="slider-expect" min="0" max="100" value="50" oninput="updateEnergyChart()">
+                            <p class="text-xs text-stone-500 mt-1">降低數值代表「情感撤退」，不強求改變他人，放過自己。</p>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium text-stone-700">💆‍♀️ 減輕無意義的吃苦崇拜與自我懲罰</span>
+                                <span id="val-suffering" class="text-sm font-bold text-accent">50%</span>
+                            </div>
+                            <input type="range" id="slider-suffering" min="0" max="100" value="50" oninput="updateEnergyChart()">
+                            <p class="text-xs text-stone-500 mt-1">降低數值代表心安理得接納享受，提高「配得感」。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart -->
+                <div class="w-full lg:w-1/2 bg-stone-50 rounded-2xl p-6 flex flex-col justify-center">
+                    <h3 class="text-lg font-bold text-stone-800 mb-2 text-center">你的心靈容器與財富磁場狀態</h3>
+                    <p id="energy-status-text" class="text-center text-sm text-stone-600 mb-6 font-medium h-10">
+                        <!-- Dynamic Text -->
+                    </p>
+                    <div class="chart-container h-[250px] min-h-[250px]">
+                        <canvas id="energyBarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Action Plan -->
+        <section id="action" class="scroll-mt-24 fade-in">
+            <div class="bg-stone-900 rounded-3xl shadow-2xl p-8 sm:p-12 text-center text-stone-100">
+                <span class="text-3xl mb-4 block">✨</span>
+                <h2 class="text-3xl font-serif font-bold mb-6">2026 實踐指南：開啟豐盛的第一步</h2>
+                <p class="text-stone-300 max-w-2xl mx-auto mb-10">
+                    命運從不獎勵痛苦本身。你不需要等到有錢才開始享受生活；你需要先開始享受生活，才能把錢吸引過來。請勾選今天就願意為自己嘗試的行動：
+                </p>
+
+                <div class="max-w-xl mx-auto text-left space-y-4 mb-10">
+                    <label class="flex items-start space-x-4 cursor-pointer group">
+                        <input type="checkbox" class="w-6 h-6 rounded border-stone-500 text-accent focus:ring-accent accent-accent mt-1 cursor-pointer">
+                        <span class="text-lg group-hover:text-white transition-colors">喝一杯平時捨不得點的高級精品咖啡，純粹取悅自己。</span>
+                    </label>
+                    <label class="flex items-start space-x-4 cursor-pointer group">
+                        <input type="checkbox" class="w-6 h-6 rounded border-stone-500 text-accent focus:ring-accent accent-accent mt-1 cursor-pointer">
+                        <span class="text-lg group-hover:text-white transition-colors">買一束鮮花放在桌上，不需任何理由，只因我值得。</span>
+                    </label>
+                    <label class="flex items-start space-x-4 cursor-pointer group">
+                        <input type="checkbox" class="w-6 h-6 rounded border-stone-500 text-accent focus:ring-accent accent-accent mt-1 cursor-pointer">
+                        <span class="text-lg group-hover:text-white transition-colors">每日 5 分鐘留白：不看手機，回到當下感受呼吸，建立無用的精神結界。</span>
+                    </label>
+                </div>
+
+                <div class="bg-stone-800 p-6 rounded-2xl inline-block text-left border border-stone-700">
+                    <p class="text-sm text-stone-400 mb-2 uppercase tracking-widest font-bold">每日心靈宣言</p>
+                    <p class="text-xl font-serif italic text-white">
+                        「我值得。不因為我做了什麼，就因為我活著，我就值得體驗世間的一切美好。」
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 py-10 text-center">
+        <p class="text-stone-400 text-sm">
+            基於 Naval Ravikant 哲學與中年自我富養邏輯構建<br>
+            向外張望的人在做夢，向內審視的人才是清醒的。
+        </p>
+    </footer>
+
+    <!-- Vanilla JS Logic -->
+    <script>
+        // ==========================================
+        // Mobile Menu Toggle
+        // ==========================================
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // ==========================================
+        // Data Storage & Content Population
+        // ==========================================
+        const wealthRules = [
+            { icon: "🏺", title: "規律一：修復不配得感", desc: "潛意識的『自懲機制』是財富流失的裂縫。每一次坦然取悅自己，都是在重寫大腦預設程式，匹配高配置自我。" },
+            { icon: "🌊", title: "規律二：喜悅同頻共振", desc: "緊繃散發飢渴感，引發防備。鬆弛與喜悅屬超高能量，能使直覺敏銳，主動吸引資源與資金。" },
+            { icon: "🧠", title: "規律三：升級網狀激活系統", desc: "大腦的過濾器(RAS)只匹配熟悉的標準。習慣低配生活會屏蔽賺錢機會。體驗美好事物即是升級大腦 OS。" },
+            { icon: "🎭", title: "規律四：丟掉受害者劇本", desc: "市場按創造的『價值』付費，而非流汗量。打破吃苦崇拜，放下必須受苦的執念，擁抱輕鬆高回報的機會。" },
+            { icon: "🎨", title: "規律五：審美即護城河", desc: "體驗經濟時代，財富差價在於對美好的感知力。長期浸泡優質體驗，能精準捕捉需求，創造審美溢價。" },
+            { icon: "🔋", title: "規律六：身體是財富容器", desc: "氣血虧虛導致決策短視。滋養身體能讓身心通透，自帶強大穩定磁場，贏得商業談判的極高信任。" },
+            { icon: "🔥", title: "規律七：喚醒慾望驅動力", desc: "過早追求清心寡欲等於砍斷賺錢發動機。體驗極致美好能喚醒渴望，轉化為持續精進的強大內驅力。" }
+        ];
+
+        const lifeRules = [
+            { icon: "🛡️", title: "邏輯一：能量絕對止損", desc: "情緒勞動是最大的消耗。透過課題分離，在心中建立防火牆，冷酷切斷低質量、單向消耗的社交羈絆。" },
+            { icon: "🕰️", title: "邏輯二：用金錢買控制權", desc: "拋棄虛張聲勢的面子消費。將金錢用於降低生活摩擦係數（如好睡眠、省時工具），買回鬆弛感與自由。" },
+            { icon: "🧘‍♂️", title: "邏輯三：情感撤退", desc: "降低對伴侶與孩子的高期待。將婚姻視為合夥關係，不強求改變他人。無所求，在關係中便能徹底無敵。" },
+            { icon: "🍃", title: "邏輯四：奪回肉身自主權", desc: "現代社會將人工具化。透過正念覺知，每日 5 分鐘留白，讓神經系統從戰鬥切換至休息消化狀態。" },
+            { icon: "🕶️", title: "邏輯五：高維認知屏蔽", desc: "社會成功標準是消費主義的『焦慮算法』。屏蔽世俗噪音，允許自己做個普通人，拿回注意力主權。" },
+            { icon: "🧩", title: "邏輯六：無用的精神結界", desc: "在重重身分外，建立一塊不帶功利心、不需炫耀的專屬愛好領地（如拼樂高）。無用之用，修復靈魂。" },
+            { icon: "🌊", title: "邏輯七：臣服的智慧", desc: "停止與無常的現實較勁。不問『為何發生在我身上』，而是問『這教會我什麼』。全盤接納，包容風暴。" }
+        ];
+
+        function createCard(rule) {
+            return `
+                <div class="rule-card bg-white p-6 rounded-2xl border border-stone-200 h-full flex flex-col">
+                    <div class="text-3xl mb-4">${rule.icon}</div>
+                    <h3 class="text-lg font-bold text-stone-900 mb-3">${rule.title}</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed flex-grow">${rule.desc}</p>
+                </div>
+            `;
+        }
+
+        // Initialize Grids
+        document.getElementById('grid-wealth').innerHTML = wealthRules.map(createCard).join('');
+        document.getElementById('grid-life').innerHTML = lifeRules.map(createCard).join('');
+
+        // Tab Switching Logic
+        window.switchTab = function(tab) {
+            const btnWealth = document.getElementById('tab-wealth');
+            const btnLife = document.getElementById('tab-life');
+            const gridWealth = document.getElementById('grid-wealth');
+            const gridLife = document.getElementById('grid-life');
+
+            if (tab === 'wealth') {
+                btnWealth.className = 'px-6 py-2 rounded-full font-bold bg-accent text-white transition-colors';
+                btnLife.className = 'px-6 py-2 rounded-full font-bold bg-stone-200 text-stone-600 hover:bg-stone-300 transition-colors';
+                gridWealth.classList.remove('hidden');
+                gridLife.classList.add('hidden');
+            } else {
+                btnLife.className = 'px-6 py-2 rounded-full font-bold bg-accent text-white transition-colors';
+                btnWealth.className = 'px-6 py-2 rounded-full font-bold bg-stone-200 text-stone-600 hover:bg-stone-300 transition-colors';
+                gridLife.classList.remove('hidden');
+                gridWealth.classList.add('hidden');
+            }
+        }
+
+        // ==========================================
+        // Chart.js Configuration & Rendering
+        // ==========================================
+        
+        // 1. Mindset Radar Chart
+        const ctxRadar = document.getElementById('mindsetRadarChart').getContext('2d');
+        new Chart(ctxRadar, {
+            type: 'radar',
+            data: {
+                labels: [
+                    ['配得感', '(Deservingness)'], 
+                    ['鬆弛狀態', '(Relaxation)'], 
+                    ['審美與體驗', '(Aesthetics)'], 
+                    ['身體氣血', '(Physical Energy)'], 
+                    ['內在平靜', '(Inner Peace)']
+                ],
+                datasets: [{
+                    label: '窮人匱乏思維',
+                    data: [20, 10, 30, 40, 15],
+                    backgroundColor: 'rgba(74, 66, 56, 0.2)', // stone-800 transparent
+                    borderColor: '#4A4238',
+                    pointBackgroundColor: '#4A4238',
+                    borderWidth: 2,
+                }, {
+                    label: '納瓦爾豐盛思維',
+                    data: [95, 90, 85, 80, 100],
+                    backgroundColor: 'rgba(154, 123, 94, 0.4)', // accent transparent
+                    borderColor: '#9A7B5E',
+                    pointBackgroundColor: '#9A7B5E',
+                    borderWidth: 2,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(0,0,0,0.1)' },
+                        grid: { color: 'rgba(0,0,0,0.1)' },
+                        pointLabels: {
+                            font: { family: '"Noto Sans TC", sans-serif', size: 12 },
+                            color: '#4A4238'
+                        },
+                        ticks: { display: false, min: 0, max: 100 }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { font: { family: '"Noto Sans TC", sans-serif' } }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(50, 44, 37, 0.9)',
+                        titleFont: { family: '"Noto Sans TC", sans-serif' },
+                        bodyFont: { family: '"Noto Sans TC", sans-serif' }
+                    }
+                }
+            }
+        });
+
+        // 2. Energy Dashboard Chart
+        const ctxBar = document.getElementById('energyBarChart').getContext('2d');
+        let energyChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['能量漏水點 (消耗)', '心靈與財富容量 (豐盛)'],
+                datasets: [{
+                    label: '當前能量狀態',
+                    data: [75, 25], // Initial values
+                    backgroundColor: [
+                        '#4A4238', // Dark stone for leak
+                        '#9A7B5E'  // Accent for capacity
+                    ],
+                    borderRadius: 8,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y', // Horizontal bar chart
+                scales: {
+                    x: {
+                        min: 0,
+                        max: 100,
+                        grid: { display: false },
+                        ticks: { callback: function(value) { return value + "%" } }
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { font: { family: '"Noto Sans TC", sans-serif', size: 14 } }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.raw.toFixed(1) + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Interaction Logic for Energy Chart
+        window.updateEnergyChart = function() {
+            const toxic = parseInt(document.getElementById('slider-toxic').value);
+            const expect = parseInt(document.getElementById('slider-expect').value);
+            const suffering = parseInt(document.getElementById('slider-suffering').value);
+            
+            // Update labels
+            document.getElementById('val-toxic').innerText = toxic + '%';
+            document.getElementById('val-expect').innerText = expect + '%';
+            document.getElementById('val-suffering').innerText = suffering + '%';
+
+            // Calculate overall "Leak" (average of the three negative sliders)
+            const leakValue = (toxic + expect + suffering) / 3;
+            // Capacity is the inverse
+            const capacityValue = 100 - leakValue;
+
+            // Update Chart
+            energyChart.data.datasets[0].data = [leakValue, capacityValue];
+            energyChart.update();
+
+            // Update Status Text
+            const statusText = document.getElementById('energy-status-text');
+            if (capacityValue < 40) {
+                statusText.innerHTML = "🔴 容器破裂：能量嚴重外流，處於討好與內耗狀態，財富難以駐留。";
+                statusText.style.color = '#dc2626';
+            } else if (capacityValue < 70) {
+                statusText.innerHTML = "🟡 逐漸修復：開始懂得拒絕，能量逐漸回穩，生活摩擦力降低。";
+                statusText.style.color = '#d97706';
+            } else {
+                statusText.innerHTML = "🟢 滿溢豐盛：極度的自我滋養！心如止水，成為最強的財富吸鐵石。";
+                statusText.style.color = '#16a34a';
+            }
+        }
+        
+        // Initial call to set status text
+        updateEnergyChart();
+
+    </script>
+</body>
+</html>

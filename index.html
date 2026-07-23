@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>簡報預覽</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sidebar-width: 280px;
+      --bg: #f7f5f2;
+      --sidebar-bg: #1e1b18;
+      --sidebar-text: #e8e4df;
+      --sidebar-muted: #9a928a;
+      --accent: #c97a64;
+      --accent-hover: #d9917d;
+      --border: #e6dfd3;
+      --header-h: 56px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans TC', system-ui, sans-serif;
+      background: var(--bg);
+      color: #322c25;
+      height: 100dvh;
+      overflow: hidden;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) 1fr;
+      height: 100dvh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: var(--sidebar-bg);
+      color: var(--sidebar-text);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-right: 1px solid #2a2622;
+    }
+
+    .sidebar-header {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid #2a2622;
+      flex-shrink: 0;
+    }
+
+    .sidebar-header h1 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .sidebar-header p {
+      font-size: 0.75rem;
+      color: var(--sidebar-muted);
+      margin-top: 4px;
+    }
+
+    .nav-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 0 24px;
+    }
+
+    .nav-scroll::-webkit-scrollbar { width: 4px; }
+    .nav-scroll::-webkit-scrollbar-thumb { background: #3d3833; border-radius: 2px; }
+
+    .category { margin-bottom: 4px; }
+
+    .category-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: none;
+      border: none;
+      color: var(--sidebar-text);
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.15s;
+    }
+
+    .category-btn:hover { background: #2a2622; }
+
+    .category-btn .chevron {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+      opacity: 0.6;
+    }
+
+    .category.collapsed .chevron { transform: rotate(-90deg); }
+    .category.collapsed .submenu { display: none; }
+
+    .submenu { list-style: none; }
+
+    .submenu-item button {
+      width: 100%;
+      display: block;
+      padding: 8px 20px 8px 44px;
+      background: none;
+      border: none;
+      color: var(--sidebar-muted);
+      font-family: inherit;
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      cursor: pointer;
+      text-align: left;
+      transition: color 0.15s, background 0.15s;
+      border-left: 3px solid transparent;
+    }
+
+    .submenu-item button:hover {
+      color: var(--sidebar-text);
+      background: #252220;
+    }
+
+    .submenu-item button.active {
+      color: #fff;
+      background: #2d2824;
+      border-left-color: var(--accent);
+    }
+
+    /* Main */
+    .main {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .toolbar {
+      height: var(--header-h);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 16px;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.875rem;
+    }
+
+    .toolbar-title {
+      flex: 1;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .toolbar-actions a {
+      font-size: 0.8125rem;
+      color: var(--accent);
+      text-decoration: none;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+
+    .toolbar-actions a:hover { background: var(--bg); }
+
+    .preview-wrap {
+      flex: 1;
+      position: relative;
+      background: #eae5de;
+    }
+
+    .preview-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #fff;
+    }
+
+    .empty-state {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #8c7461;
+      gap: 8px;
+    }
+
+    .empty-state svg { opacity: 0.4; }
+
+    .loading {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(247,245,242,0.8);
+      font-size: 0.875rem;
+      color: #8c7461;
+    }
+
+    .loading.show { display: flex; }
+
+    /* Mobile overlay */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 99;
+    }
+
+    @media (max-width: 768px) {
+      .app { grid-template-columns: 1fr; }
+
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: var(--sidebar-width);
+        z-index: 100;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+      }
+
+      .sidebar.open { transform: translateX(0); }
+      .sidebar-overlay.open { display: block; }
+      .menu-toggle { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar-overlay" id="overlay"></div>
+
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h1>簡報預覽</h1>
+        <p id="nav-summary">載入中…</p>
+      </div>
+      <nav class="nav-scroll" id="nav" aria-label="簡報選單"></nav>
+    </aside>
+
+    <main class="main">
+      <header class="toolbar">
+        <button class="menu-toggle" id="menuToggle" aria-label="開啟選單">☰ 選單</button>
+        <div class="toolbar-title" id="currentTitle">請從左側選擇簡報</div>
+        <div class="toolbar-actions">
+          <a id="openNewTab" href="#" target="_blank" rel="noopener" hidden>新分頁開啟</a>
+        </div>
+      </header>
+
+      <div class="preview-wrap">
+        <div class="empty-state" id="emptyState">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="14" rx="2"/>
+            <path d="M7 21h10M12 17v4"/>
+          </svg>
+          <span>選擇左側簡報以預覽</span>
+        </div>
+        <div class="loading" id="loading">載入中…</div>
+        <iframe id="preview" title="簡報預覽" hidden></iframe>
+      </div>
+    </main>
+  </div>
+
+  <script src="manifest.js"></script>
+  <script>
+    const nav = document.getElementById('nav');
+    const navSummary = document.getElementById('nav-summary');
+    const preview = document.getElementById('preview');
+    const emptyState = document.getElementById('emptyState');
+    const loading = document.getElementById('loading');
+    const currentTitle = document.getElementById('currentTitle');
+    const openNewTab = document.getElementById('openNewTab');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    const menuToggle = document.getElementById('menuToggle');
+
+    let manifest = null;
+    let activeId = null;
+
+    function closeMobileNav() {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('open');
+    }
+
+    function openMobileNav() {
+      sidebar.classList.add('open');
+      overlay.classList.add('open');
+    }
+
+    menuToggle.addEventListener('click', openMobileNav);
+    overlay.addEventListener('click', closeMobileNav);
+
+    function buildNav(data) {
+      nav.innerHTML = '';
+      let total = 0;
+
+      data.categories.forEach((cat, ci) => {
+        total += cat.presentations.length;
+
+        const section = document.createElement('div');
+        section.className = 'category';
+        section.dataset.category = cat.id;
+
+        const btn = document.createElement('button');
+        btn.className = 'category-btn';
+        btn.type = 'button';
+        btn.innerHTML = `
+          <svg class="chevron" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M4 6l4 4 4-4"/>
+          </svg>
+          <span>${escapeHtml(cat.name)}</span>
+          <span style="margin-left:auto;font-size:0.75rem;opacity:0.5">${cat.presentations.length}</span>
+        `;
+        btn.addEventListener('click', () => section.classList.toggle('collapsed'));
+
+        const ul = document.createElement('ul');
+        ul.className = 'submenu';
+
+        cat.presentations.forEach((item) => {
+          const li = document.createElement('li');
+          li.className = 'submenu-item';
+
+          const link = document.createElement('button');
+          link.type = 'button';
+          link.textContent = item.title;
+          link.dataset.id = item.id;
+          link.dataset.path = item.path;
+          link.dataset.title = item.title;
+          link.addEventListener('click', () => selectPresentation(item, link));
+
+          li.appendChild(link);
+          ul.appendChild(li);
+        });
+
+        section.appendChild(btn);
+        section.appendChild(ul);
+        nav.appendChild(section);
+      });
+
+      navSummary.textContent = `${data.categories.length} 個分類 · ${total} 份簡報`;
+    }
+
+    function selectPresentation(item, btnEl) {
+      activeId = item.id;
+      location.hash = item.id;
+
+      document.querySelectorAll('.submenu-item button').forEach((b) => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+
+      currentTitle.textContent = item.title;
+      openNewTab.href = item.path;
+      openNewTab.hidden = false;
+
+      emptyState.hidden = true;
+      preview.hidden = false;
+      loading.classList.add('show');
+
+      preview.onload = () => loading.classList.remove('show');
+      preview.src = item.path;
+
+      closeMobileNav();
+    }
+
+    function escapeHtml(str) {
+      const d = document.createElement('div');
+      d.textContent = str;
+      return d.innerHTML;
+    }
+
+    function findById(id) {
+      for (const cat of manifest.categories) {
+        const item = cat.presentations.find((p) => p.id === id);
+        if (item) return { item, cat };
+      }
+      return null;
+    }
+
+    function activateFromHash() {
+      const id = location.hash.slice(1);
+      if (!id || !manifest) return;
+
+      const found = findById(id);
+      if (!found) return;
+
+      const btn = document.querySelector(`.submenu-item button[data-id="${id}"]`);
+      const section = btn?.closest('.category');
+      if (section) section.classList.remove('collapsed');
+      selectPresentation(found.item, btn);
+    }
+
+    async function loadManifest() {
+      if (window.PRESENTATION_MANIFEST) {
+        return window.PRESENTATION_MANIFEST;
+      }
+
+      // fallback for dev servers that prefer JSON
+      const res = await fetch('manifest.json');
+      if (!res.ok) throw new Error('無法載入 manifest，請執行 node scripts/build-manifest.js');
+      return res.json();
+    }
+
+    async function init() {
+      try {
+        manifest = await loadManifest();
+        buildNav(manifest);
+
+        if (location.hash) {
+          activateFromHash();
+        } else if (manifest.categories[0]?.presentations[0]) {
+          const first = manifest.categories[0].presentations[0];
+          location.hash = first.id;
+          activateFromHash();
+        }
+      } catch (err) {
+        navSummary.textContent = '載入失敗';
+        nav.innerHTML = `<p style="padding:20px;color:#c97a64;font-size:0.875rem">${escapeHtml(err.message)}<br><br>請在本機執行：<code style="color:#e8e4df">node scripts/build-manifest.js</code><br>再將 manifest.js 一併上傳 GitHub</p>`;
+      }
+    }
+
+    window.addEventListener('hashchange', activateFromHash);
+    init();
+  </script>
+</body>
+</html>

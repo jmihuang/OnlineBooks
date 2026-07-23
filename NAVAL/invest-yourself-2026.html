@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026 投資自己：接納自我之道</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React and ReactDOM CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <!-- Babel CDN for JSX Parsing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+  
+  <style>
+    body {
+      background-color: #FAF8F5;
+      color: #322C25;
+      font-family: 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+    }
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      background: transparent;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 18px;
+      width: 18px;
+      border-radius: 50%;
+      background: #8C7461;
+      cursor: pointer;
+      margin-top: -6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 6px;
+      cursor: pointer;
+      background: #E6DFD3;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Chosen Palette: Warm Neutrals & Philosophical Earth Tones (Cream #FAF8F5, Sand #E6DFD3, Earth #8C7461, Dark Slate #322C25) -->
+  <!-- Application Structure Plan: 
+       A high-end, 6-slide interactive SPA slideshow dedicated specifically to Naval's "2026 Invest in Yourself" program.
+       Focuses on boundaries, attention protection, escaping zero-sum status games, and befriending failure.
+  -->
+  <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. Visuals are CSS/HTML constructs and standard emojis. -->
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function App() {
+      const [currentSlide, setCurrentSlide] = useState(0);
+      const [isPlaying, setIsPlaying] = useState(false);
+      
+      // Interactive States
+      const [attentionDef, setAttentionDef] = useState(50);
+      const [chooseGame, setChooseGame] = useState('none');
+      const [failExperiment, setFailExperiment] = useState(false);
+      const [checklist, setChecklist] = useState({ state1: false, state2: false, state3: false });
+
+      useEffect(() => {
+        let timer;
+        if (isPlaying) {
+          timer = setInterval(() => {
+            setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+          }, 8000);
+        }
+        return () => clearInterval(timer);
+      }, [isPlaying]);
+
+      const slides = [
+        // Slide 1: Cover
+        {
+          bg: "from-[#FAF8F5] to-[#E6DFD3]",
+          label: "Presentation 1 • 2026 首要課題",
+          title: "2026 投資自己：接納自我之道",
+          render: () => (
+            <div className="text-center py-8 space-y-6 max-w-2xl mx-auto animate-fade-in">
+              <div className="w-16 h-16 bg-[#E6DFD3] rounded-full flex items-center justify-center text-3xl mx-auto shadow-inner">
+                🚀
+              </div>
+              <p className="text-[11px] font-mono tracking-[0.25em] text-[#8C7461] font-bold uppercase">
+                Naval Ravikant • Project Self
+              </p>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-black text-[#322C25] leading-tight tracking-wider">
+                你是你自己最重要的專案
+              </h1>
+              <p className="text-sm md:text-base text-[#5C544A] italic font-serif">
+                「在2026年，你能做出最具顛覆性、重塑人生的決定就是『自私』。」
+              </p>
+              <div className="h-[1px] w-12 bg-[#8C7461] mx-auto"></div>
+              <p className="text-xs text-[#7A7165] leading-relaxed max-w-lg mx-auto">
+                停止把焦慮當成前進的燃料。本簡報帶您重構生命的「作業系統」，退出消耗精力的零和遊戲，學會做自己。
+              </p>
+              <div className="pt-2">
+                <button 
+                  onClick={() => setCurrentSlide(1)}
+                  className="px-6 py-2.5 bg-[#8C7461] hover:bg-[#786150] text-white rounded-lg text-xs font-bold tracking-widest shadow transition-all hover:scale-105"
+                >
+                  解鎖 2026 自我心法 ➔
+                </button>
+              </div>
+            </div>
+          )
+        },
+        // Slide 2: Boundary and Attention
+        {
+          bg: "from-[#FAF8F5] to-[#F3EDE2]",
+          label: "第一章 • 保護注意力與設定界限",
+          title: "注意力：你最稀缺的資產",
+          render: () => {
+            const getAttentionText = (val) => {
+              if (val < 40) return "⚠️ 門戶大開：每天被瑣碎的通知、郵件、無意義社交淹沒，心智城堡正被蠶食。";
+              if (val < 75) return "⚖️ 護城河成形：開始有意識地拒絕部分消耗的人事物，但心力仍會搖擺。";
+              return "✨ 心智城堡防禦成功：每天擁有數小時的高品質專注力。這是比比特幣更稀缺的資產。";
+            };
+            return (
+              <div className="grid md:grid-cols-2 gap-8 items-center py-2">
+                <div className="space-y-4 text-left">
+                  <h3 className="text-lg font-serif font-bold text-[#322C25]">界限不是孤立高牆，而是心智城堡的護城河</h3>
+                  <p className="text-xs text-[#5C544A] leading-relaxed">
+                    勇敢地對那些「只索取而不付出」的人事物說不。保護注意力就是保護你未來創造價值的能力。
+                  </p>
+                  <div className="p-3 bg-white/80 rounded-lg border border-[#E6DFD3] text-[10px] text-[#8C7461] leading-relaxed">
+                    {getAttentionText(attentionDef)}
+                  </div>
+                </div>
+                <div className="p-6 bg-white rounded-xl border border-[#E6DFD3] space-y-4 flex flex-col justify-center shadow-sm">
+                  <div className="flex justify-between text-xs text-[#5C544A] font-mono">
+                    <span>心智護城河深度</span>
+                    <span className="font-bold text-[#8C7461]">{attentionDef}%</span>
+                  </div>
+                  <input 
+                    type="range" 
+                    min="10" 
+                    max="100" 
+                    value={attentionDef} 
+                    onChange={(e) => setAttentionDef(Number(e.target.value))}
+                    className="w-full accent-[#8C7461] cursor-pointer"
+                  />
+                  <p className="text-[9px] text-[#7A7165] text-center italic">
+                    *唯有守住注意力，才能在正確的時機做出正確的決策。
+                  </p>
+                </div>
+              </div>
+            );
+          }
+        },
+        // Slide 3: Escape Status Game
+        {
+          bg: "from-[#F3EDE2] to-[#FAF8F5]",
+          label: "第二章 • 退出零和博弈",
+          title: "退出「地位遊戲」，去玩「財富遊戲」",
+          render: () => (
+            <div className="space-y-4 py-2">
+              <div className="text-center max-w-xl mx-auto">
+                <p className="text-xs text-[#5C544A] leading-relaxed">
+                  社會標準的成功（更多金錢、更高職位、更大房子）是一場零和的地位遊戲。你贏意味著別人輸，伴隨而來的是源源不絕的焦慮。
+                </p>
+              </div>
+              <div className="grid md:grid-cols-2 gap-6 text-left">
+                <div 
+                  onClick={() => setChooseGame('status')}
+                  className={`p-4 rounded-xl border cursor-pointer transition-all ${
+                    chooseGame === 'status' ? 'bg-red-50/50 border-red-300' : 'bg-white border-[#E6DFD3] hover:border-[#DCD3C1]'
+                  }`}
+                >
+                  <div className="flex items-center space-x-2 mb-2">
+                    <span className="text-base">❌</span>
+                    <h4 className="font-bold text-xs text-[#322C25]">零和賽局：地位遊戲</h4>
+                  </div>
+                  <p className="text-[10px] text-[#7A7165] leading-relaxed">
+                    在金字塔裡拚命往上爬，害怕被同齡人拋棄，活在別人的期許與審判中。能量狀態：持續緊繃與焦慮。
+                  </p>
+                </div>
+                <div 
+                  onClick={() => setChooseGame('wealth')}
+                  className={`p-4 rounded-xl border cursor-pointer transition-all ${
+                    chooseGame === 'wealth' ? 'bg-[#8C7461]/10 border-[#8C7461]' : 'bg-white border-[#E6DFD3] hover:border-[#DCD3C1]'
+                  }`}
+                >
+                  <div className="flex items-center space-x-2 mb-2">
+                    <span className="text-base">✨</span>
+                    <h4 className="font-bold text-xs text-[#8C7461]">雙贏正和：真正的自由</h4>
+                  </div>
+                  <p className="text-[10px] text-[#7A7165] leading-relaxed">
+                    早晨醒來，擁有不見不想見的人、不做不想做的事的選擇權。擁有平靜、健康與絕對的時間自主權。
+                  </p>
+                </div>
+              </div>
+              {chooseGame !== 'none' && (
+                <div className="p-3 bg-white border border-[#E6DFD3] rounded-lg max-w-md mx-auto text-xs text-center text-[#8C7461] font-medium animate-fade-in">
+                  {chooseGame === 'status' ? "您仍處於社會設定的「比較演算法」中，請試著切換至自由主權。" : "恭喜！您正朝向真正的財富和內心平靜邁進。"}
+                </div>
+              )}
+            </div>
+          )
+        },
+        // Slide 4: Failure as Experiment
+        {
+          bg: "from-[#FAF8F5] to-[#EFECE1]",
+          label: "第三章 • 心靈排毒演算法",
+          title: "與恐懼和失敗達成世紀和解",
+          render: () => (
+            <div className="grid md:grid-cols-2 gap-8 items-center py-2">
+              <div className="space-y-4 text-left">
+                <h3 className="text-lg font-serif font-bold text-[#322C25]">恐懼是消耗能量的寄生蟲</h3>
+                <p className="text-xs text-[#5C544A] leading-relaxed">
+                  行動是治癒恐懼的唯一解藥。不要讓失敗定義你的價值，要把你的人生當作一間實驗室，失敗只是數據收集與反饋。
+                </p>
+                <div className="pt-2">
+                  <button 
+                    onClick={() => setFailExperiment(!failExperiment)}
+                    className="px-4 py-2 bg-[#8C7461] hover:bg-[#786150] text-white text-xs font-bold rounded-lg shadow transition-all"
+                  >
+                    {failExperiment ? "切回傳統痛苦視角" : "一鍵啟動「實驗室思維」"}
+                  </button>
+                </div>
+              </div>
+              <div className="p-5 bg-white rounded-xl border border-[#E4DEC9] h-48 flex flex-col justify-center space-y-3 shadow-sm text-left">
+                <div className="text-center font-bold text-xs text-[#322C25]">大腦回饋代碼</div>
+                {!failExperiment ? (
+                  <div className="space-y-1.5 text-xs text-[#5C544A]">
+                    <p className="text-red-600 font-bold">✕ 「我又搞砸了，我真是個失敗者。」</p>
+                    <p className="text-[10px] text-gray-400">潛意識產生羞恥感，引發自我否定，拒絕未來的冒險。</p>
+                  </div>
+                ) : (
+                  <div className="space-y-1.5 text-xs text-[#5C544A] animate-fade-in">
+                    <p className="text-emerald-700 font-bold">✓ 「本次實驗失敗。反饋數據已收集，優化路徑中。」</p>
+                    <p className="text-[10px] text-[#8C7461] font-medium">大腦拒絕情緒勒索，專注于客觀規律優化。前進力量充沛！</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )
+        },
+        // Slide 5: Self-Love and Gratitude
+        {
+          bg: "from-[#EFECE1] to-[#FAF8F5]",
+          label: "第四章 • 大腦迴路重塑",
+          title: "培養感恩與真正的「自愛」",
+          render: () => (
+            <div className="grid md:grid-cols-2 gap-8 items-center py-2">
+              <div className="space-y-4 text-left">
+                <h3 className="text-xl font-serif font-bold text-[#322C25]">對抗大腦天生的負面偏見</h3>
+                <p className="text-xs text-[#5C544A] leading-relaxed">
+                  感恩是重塑大腦迴路最有效的工具，能將匱乏感轉化為豐盛感。真正的自愛不是消費主義的誘捕陷阱，而是像尊重別人一樣尊重自己，原諒過去的自己。
+                </p>
+              </div>
+              <div className="p-5 bg-white rounded-xl border border-[#DCD3C1] flex flex-col justify-center space-y-3 text-center shadow-sm h-48">
+                <div className="text-2xl">🌱</div>
+                <h4 className="text-xs font-bold text-[#322C25]">2026 自愛宣言</h4>
+                <p className="text-[11px] text-[#8C7461] font-serif italic">
+                  「我原諒過去那個因為不安全感而妥協、焦慮的自己。從今天起，我將像呵護最珍貴的資產一樣，保護我的精力與平靜。」
+                </p>
+              </div>
+            </div>
+          )
+        },
+        // Slide 6: Manifesto
+        {
+          bg: "from-[#FAF8F5] to-[#E6DFD3]",
+          label: "Action Plan • 2026 演算法重組",
+          title: "寫入你的 2026 「配得代碼」",
+          render: () => {
+            const completed = Object.values(checklist).every(Boolean);
+            return (
+              <div className="text-center py-2 space-y-4 max-w-xl mx-auto">
+                <p className="text-xs text-[#5C544A] max-w-md mx-auto leading-relaxed">
+                  點擊勾選，在潛意識中寫入全新的生活預設模式：
+                </p>
+                
+                <div className="space-y-2 text-left">
+                  <div 
+                    onClick={() => setChecklist(p => ({ ...p, state1: !p.state1 }))}
+                    className={`p-2.5 rounded-lg border cursor-pointer transition-all flex items-center space-x-3 text-xs ${
+                      checklist.state1 ? 'bg-[#8C7461]/10 border-[#8C7461] text-[#322C25]' : 'bg-white border-[#E6DFD3] text-[#5C544A]'
+                    }`}
+                  >
+                    <div className={`w-4 h-4 rounded border flex items-center justify-center text-[9px] ${
+                      checklist.state1 ? 'bg-[#8C7461] border-[#8C7461] text-white' : 'border-[#C8BCAC]'
+                    }`}>
+                      {checklist.state1 && "✓"}
+                    </div>
+                    <span>停止在社交媒體上比較。別人的生活是別人的，我的生活只對自己負責。</span>
+                  </div>
+
+                  <div 
+                    onClick={() => setChecklist(p => ({ ...p, state2: !p.state2 }))}
+                    className={`p-2.5 rounded-lg border cursor-pointer transition-all flex items-center space-x-3 text-xs ${
+                      checklist.state2 ? 'bg-[#8C7461]/10 border-[#8C7461] text-[#322C25]' : 'bg-white border-[#E6DFD3] text-[#5C544A]'
+                    }`}
+                  >
+                    <div className={`w-4 h-4 rounded border flex items-center justify-center text-[9px] ${
+                      checklist.state2 ? 'bg-[#8C7461] border-[#8C7461] text-white' : 'border-[#C8BCAC]'
+                    }`}>
+                      {checklist.state2 && "✓"}
+                    </div>
+                    <span>勇敢說不。對無效應酬、過度索取精力的爛人爛事進行絕對隔離。</span>
+                  </div>
+
+                  <div 
+                    onClick={() => setChecklist(p => ({ ...p, state3: !p.state3 }))}
+                    className={`p-2.5 rounded-lg border cursor-pointer transition-all flex items-center space-x-3 text-xs ${
+                      checklist.state3 ? 'bg-[#8C7461]/10 border-[#8C7461] text-[#322C25]' : 'bg-white border-[#E6DFD3] text-[#5C544A]'
+                    }`}
+                  >
+                    <div className={`w-4 h-4 rounded border flex items-center justify-center text-[9px] ${
+                      checklist.state3 ? 'bg-[#8C7461] border-[#8C7461] text-white' : 'border-[#C8BCAC]'
+                    }`}>
+                      {checklist.state3 && "✓"}
+                    </div>
+                    <span>接納自己。我不完美，但我獨一無二，且我配得上世間一切溫暖與豐盛。</span>
+                  </div>
+                </div>
+
+                {completed && (
+                  <div className="bg-[#8C7461] text-white p-3 rounded-lg shadow text-xs font-serif italic max-w-md mx-auto animate-fade-in">
+                    「你先開始享受與接納生活，你才能把世間最好的東西吸引過來。」
+                  </div>
+                )}
+              </div>
+            );
+          }
+        }
+      ];
+
+      return (
+        <div className="min-h-screen bg-[#F5EFEB] text-[#2C2621] flex flex-col justify-between select-none">
+          <header className="border-b border-[#DCD3C1] px-6 py-4 flex justify-between items-center bg-[#FAF6F0] sticky top-0 z-50">
+            <div className="flex items-center space-x-3">
+              <span className="text-sm font-serif font-black tracking-widest text-[#322C25]">NAVAL 2026</span>
+              <span className="px-2 py-0.5 bg-[#8C7461] text-white text-[9px] font-bold rounded tracking-wider uppercase">
+                投資自己系統
+              </span>
+            </div>
+            <div className="flex items-center space-x-4">
+              <button 
+                onClick={() => setIsPlaying(!isPlaying)}
+                className={`flex items-center space-x-1 px-3 py-1 rounded-full text-[10px] font-bold tracking-wide transition-all ${
+                  isPlaying ? 'bg-[#8C7461] text-white' : 'bg-[#FAF6F0] text-[#8C7461] border border-[#DCD3C1] hover:bg-[#EFECE1]'
+                }`}
+              >
+                <span>{isPlaying ? '⏸ 暫停' : '▶ 自動播放 (8s)'}</span>
+              </button>
+              <div className="text-xs font-mono text-[#8C7461]">
+                頁碼: {currentSlide + 1} / {slides.length}
+              </div>
+            </div>
+          </header>
+
+          <main className="flex-grow flex items-center justify-center p-4 md:p-8 relative overflow-hidden">
+            <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-[#EFECE1] rounded-full filter blur-[120px] opacity-40 pointer-events-none" />
+            <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-[#E9E3CE] rounded-full filter blur-[120px] opacity-40 pointer-events-none" />
+
+            <div className={`w-full max-w-4xl bg-gradient-to-br ${slides[currentSlide].bgClass} border border-[#DCD3C1] shadow-2xl rounded-2xl p-6 md:p-10 min-h-[450px] flex flex-col justify-between transition-all duration-500 relative z-10`}>
+              <div className="flex items-center space-x-2 text-[#8C7461] mb-2">
+                <span className="text-xs font-mono tracking-widest uppercase font-bold">
+                  {slides[currentSlide].label}
+                </span>
+              </div>
+
+              <div className="flex-grow flex flex-col justify-center py-1">
+                <h2 className="text-2xl md:text-3xl font-serif font-extrabold text-[#322C25] mb-5 tracking-wide">
+                  {slides[currentSlide].title}
+                </h2>
+                {slides[currentSlide].render()}
+              </div>
+
+              <div className="border-t border-[#DCD3C1] pt-4 mt-4 flex justify-between items-center">
+                <div className="flex space-x-1.5 overflow-x-auto max-w-[60%] py-1">
+                  {slides.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => { setIsPlaying(false); setCurrentSlide(idx); }}
+                      className={`h-2 rounded-full transition-all ${
+                        idx === currentSlide ? 'w-8 bg-[#8C7461]' : 'w-2 bg-[#DCD3C1] hover:bg-[#C8BCAC]'
+                      }`}
+                    />
+                  ))}
+                </div>
+
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => { setIsPlaying(false); setCurrentSlide(p => Math.max(0, p - 1)); }}
+                    disabled={currentSlide === 0}
+                    className={`px-3 py-1.5 rounded-lg border border-[#DCD3C1] bg-[#FAF6F0] text-[#8C7461] text-xs font-bold transition-all hover:bg-[#EFECE1] ${
+                      currentSlide === 0 ? 'opacity-30 cursor-not-allowed' : 'active:scale-95'
+                    }`}
+                  >
+                    上頁
+                  </button>
+                  <button
+                    onClick={() => { setIsPlaying(false); setCurrentSlide(p => Math.min(slides.length - 1, p + 1)); }}
+                    disabled={currentSlide === slides.length - 1}
+                    className={`px-3 py-1.5 rounded-lg border border-[#DCD3C1] bg-[#8C7461] text-white text-xs font-bold transition-all hover:bg-[#786150] ${
+                      currentSlide === slides.length - 1 ? 'opacity-30 cursor-not-allowed' : 'active:scale-95'
+                    }`}
+                  >
+                    下頁
+                  </button>
+                </div>
+              </div>
+            </div>
+          </main>
+
+          <footer className="bg-[#FAF6F0] text-center py-3 border-t border-[#DCD3C1] text-[10px] text-[#8C7461] tracking-wider">
+            「你是你自己最重要的專案。」── 納瓦爾 • 2026 自我重構隨行簡報
+          </footer>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>中年人最高級的活法：靜靜富養自己</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React and ReactDOM CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <!-- Babel CDN for JSX Parsing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+  
+  <style>
+    body {
+      background-color: #FAF8F5;
+      color: #322C25;
+      font-family: 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+    }
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      background: transparent;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 18px;
+      width: 18px;
+      border-radius: 50%;
+      background: #8C7461;
+      cursor: pointer;
+      margin-top: -6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 6px;
+      cursor: pointer;
+      background: #E6DFD3;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Chosen Palette: Warm Neutrals & Philosophical Earth Tones (Cream #FAF8F5, Sand #E6DFD3, Earth #8C7461, Dark Slate #322C25) -->
+  <!-- Application Structure Plan: 
+       An immersive 9-slide interactive presentation focused strictly on "Midlife Self-Nourishing".
+       Covers: Emotional stop-loss, reducing expectations on relations, bodily somatic sensory activation, cognitive shielding, unhelpful social game exits, and spiritual surrender.
+  -->
+  <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. All visuals generated via standard CSS layout and Unicode emojis. -->
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function App() {
+      const [currentSlide, setCurrentSlide] = useState(0);
+      const [isPlaying, setIsPlaying] = useState(false);
+      
+      // Interactive States
+      const [vampireShield, setVampireShield] = useState({ v1: false, v2: false });
+      const [relationExpect, setRelationExpect] = useState(80);
+      const [breathTimer, setBreathingTimer] = useState(10);
+      const [isBreathing, setIsBreathing] = useState(false);
+      const [isSurrendered, setIsSurrendered] = useState(false);
+      const [sensoryCheck, setSensoryCheck] = useState({ coffee: false, flower: false, walk: false });
+
+      useEffect(() => {
+        let timer;
+        if (isPlaying) {
+          timer = setInterval(() => {
+            setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+          }, 8000);
+        }
+        return () => clearInterval(timer);
+      }, [isPlaying]);
+
+      useEffect(() => {
+        let interval;
+        if (isBreathing && breathTimer > 0) {
+          interval = setInterval(() => {
+            setBreathingTimer((prev) => prev - 1);
+          }, 1000);
+        } else if (breathTimer === 0) {
+          setIsBreathing(false);
+        }
+        return () => clearInterval(interval);
+      }, [isBreathing, breathTimer]);
+
+      const startBreathing = () => {
+        setBreathingTimer(10);
+        setIsBreathing(true);
+      };
+
+      const slides = [
+        // Slide 1: Cover
+        {
+          bg: "from-[#FAF8F5] to-[#E6DFD3]",
+          label: "Presentation 2 • 中年心靈覺醒",
+          title: "中年人最高級的活法",
+          render: () => (
+            <div className="text-center py-8 space-y-6 max-w-2xl mx-auto animate-fade-in">
+              <div className="w-16 h-16 bg-[#E6DFD3] rounded-full flex items-center justify-center text-3xl mx-auto shadow-inner">
+                🕯️
+              </div>
+              <p className="text-[11px] font-mono tracking-[0.25em] text-[#8C7461] font-bold uppercase">
+                Midlife Awakening • Silent Nourishing
+              </p>
+              <h1 className="text-3xl sm:text-4xl font-serif font-black text-[#322C25] leading-tight tracking-wider">
+                靜靜富養自己的七大底層邏輯
+              </h1>
+              <p className="text-sm md:text-base text-[#5C544A] italic font-serif">
+                「在看透生活的千瘡百孔後，依然能給自己倒一杯熱茶，從容安坐。」
+              </p>
+              <div className="h-[1px] w-12 bg-[#8C7461] mx-auto"></div>
+              <p className="text-xs text-[#7A7165] leading-relaxed max-w-lg mx-auto">
+                中年人的身不由己是一場隱痛。後半生，請學著在能量、金錢、情感、身體與靈性上進行深度重組，用最溫柔的方式把自已重新養育一遍。
+              </p>
+              <div className="pt-2">
+                <button 
+                  onClick={() => setCurrentSlide(1)}
+                  className="px-6 py-2.5 bg-[#8C7461] hover:bg-[#786150] text-white rounded-lg text-xs font-bold tracking-widest shadow transition-all hover:scale-105"
+                >
+                  進入靜靜富養邏輯 ➔
+                </button>
+              </div>
+            </div>
+          )
+        },
+        // Slide 2: Stop energy drain
+        {
+          bg: "from-[#FAF8F5] to-[#F3EDE2]",
+          label: "邏輯一 • 能量絕對止損",
+          title: "學著冷酷：情緒勞動是最大的能量吸血鬼",
+          render: () => {
+            const activeBlocked = Object.values(vampireShield).filter(Boolean).length;
+            const shieldPower = 40 + activeBlocked * 30;
+            return (
+              <div className="grid md:grid-cols-2 gap-8 items-center py-2 animate-fade-in">
+                <div className="space-y-4 text-left">
+                  <h3 className="text-lg font-serif font-bold text-[#322C25]">不要充當別人的情緒垃圾桶</h3>
+                  <p className="text-xs text-[#5C544A] leading-relaxed">
+                    身體不累但心卻耗盡了，這就是「情緒勞動」的代價。親戚的道德綁架、巨嬰朋友的無窮抱怨，都該一鍵隔離。這叫高檔的心靈防火牆。
+                  </p>
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-[11px] text-[#8C7461] font-mono">
+                      <span>心靈防火牆防禦值</span>
+                      <span>{shieldPower}%</span>
+                    </div>
+                    <div className="w-full bg-[#E6DFD3] h-2.5 rounded-full overflow-hidden">
+                      <div className="bg-[#8C7461] h-full transition-all duration-300" style={{ width: `${shieldPower}%` }} />
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-2.5 text-left">
+                  <div 
+                    onClick={() => setVampireShield(p => ({ ...p, v1: !p.v1 }))}
+                    className={`p-3 rounded-lg border cursor-pointer text-xs flex justify-between items-center transition-all ${
+                      vampireShield.v1 ? 'bg-[#8C7461]/10 border-[#8C7461] text-[#322C25] font-semibold' : 'bg-white border-[#E6DFD3] text-[#5C544A]'
+                    }`}
+                  >
+                    <span>🚫 道德綁架親戚 & 巨嬰型朋友</span>
+                    <span className="text-[10px] font-bold">{vampireShield.v1 ? "已隔絕" : "點擊隔離"}</span>
+                  </div>
+                  <div 
+                    onClick={() => setVampireShield(p => ({ ...p, v2: !p.v2 }))}
+                    className={`p-3 rounded-lg border cursor-pointer text-xs flex justify-between items-center transition-all ${
+                      vampireShield.v2 ? 'bg-[#8C7461]/10 border-[#8C7461] text-[#322C25] font-semibold' : 'bg-white border-[#E6DFD3] text-[#5C544A]'
+                    }`}
+                  >
+                    <span>🚫 無休止、攀比內耗的應酬聚會</span>
+                    <span className="text-[10px] font-bold">{vampireShield.v2 ? "已隔絕" : "點擊隔離"}</span>
+                  </div>
+                </div>
+              </div>
+            );
+          }
+        },
+        // Slide 3: Time over Face consumption
+        {
+          bg: "from-[#F3EDE2] to-[#FAF8F5]",
+          label: "邏輯二 • 重整消費觀",
+          title: "用金錢，購買你生命的「控制權」",
+          render: () => (
+            <div className="space-y-4 py-2">
+              <div className="text-center max-w-xl mx-auto">
+                <p className="text-xs text-[#5C544A]">
+                  中年人每一分錢都是拿命換來的。不要再為社交炫耀和面子買單，真正的富足是心安理得、不為別人的眼光委屈自己。
+                </p>
+              </div>
+              <div className="grid md:grid-cols-2 gap-4 text-left">
+                <div className="p-4 bg-white border border-[#E6DFD3] rounded-xl space-y-2">
+                  <h4 className="text-xs font-bold text-red-700">❌ 消耗精力的面子消費</h4>
+                  <p className="text-[10px] text-[#7A7165] leading-relaxed">
+                    買豪車、昂貴的名牌包來填補內心匱乏。快感轉瞬即逝，卻需要持續承受後續帳單所帶來的緊繃焦慮。
+                  </p>
+                </div>
+                <div className="p-4 bg-white border border-emerald-300 rounded-xl space-y-2">
+                  <h4 className="text-xs font-bold text-emerald-800">✨ 買回鬆弛感的真富養</h4>
+                  <p className="text-[10px] text-[#7A7165] leading-relaxed">
+                    把錢花在床墊、洗碗機、定期清潔等能降低生活摩擦係數的事物。你買回的是生命的便利、深度睡眠與家庭的和平。
+                  </p>
+                </div>
+              </div>
+            </div>
+          )
+        },
+        // Slide 4: Low expectations in relations
+        {
+          bg: "from-[#FAF8F5] to-[#EFECE1]",
+          label: "邏輯三 • 情感撤退",
+          title: "降低期待：在關係中徹底無敵",
+          render: () => {
+            const getRelationVibe = (val) => {
+              if (val > 75) return "🔥 關係死結：渴望伴侶100%懂自己、強逼孩子必須卓越。你每天生活在失望與糾結中。";
+              if (val > 35) return "⚖️ 學習放手：嘗試改變伴侶但徒勞，常因日常瑣事而隱忍嘆息。";
+              return "🌿 情感自主：放過彼此。伴侶是戰友，孩子平凡也是福。心中無期待，便再無任何傷害。";
+            };
+            return (
+              <div className="grid md:grid-cols-2 gap-8 items-center py-2">
+                <div className="space-y-4 text-left">
+                  <h3 className="text-lg font-serif font-bold text-[#322C25]">收回過度的拉扯與執念期待</h3>
+                  <p className="text-xs text-[#5C544A] leading-relaxed">
+                    中年人巨大的痛苦來源於對關係的高期待值。將投注在別人身上的關注與期待撤回，全額存入自己身心，你便擁有了絕對的自由。
+                  </p>
+                  <div className="p-3 bg-white/80 rounded-lg border border-[#E6DFD3] text-[10px] text-[#8C7461]">
+                    {getRelationVibe(relationExpect)}
+                  </div>
+                </div>
+                <div className="p-6 bg-white rounded-xl border border-[#E6DFD3] space-y-4 flex flex-col justify-center shadow-sm">
+                  <div className="flex justify-between text-xs text-[#5C544A] font-mono">
+                    <span>對伴侶 & 孩子的期待值</span>
+                    <span className="font-bold text-[#8C7461]">{relationExpect}%</span>
+                  </div>
+                  <input 
+                    type="range" 
+                    min="10" 
+                    max="100" 
+                    value={relationExpect} 
+                    onChange={(e) => setRelationExpect(Number(e.target.value))}
+                    className="w-full accent-[#8C7461] cursor-pointer"
+                  />
+                </div>
+              </div>
+            );
+          }
+        },
+        // Slide 5: Bodily Somatics
+        {
+          bg: "from-[#EFECE1] to-[#FAF8F5]",
+          label: "邏輯四 • 喚醒身體感官",
+          title: "身體從未忘記你所吞下的憤怒與壓抑",
+          render: () => (
+            <div className="grid md:grid-cols-2 gap-8 items-center py-2 animate-fade-in">
+              <div className="space-y-4 text-left">
+                <h3 className="text-lg font-serif font-bold text-[#322C25]">肉身不需被過度改造，它需要被聽見</h3>
+                <p className="text-xs text-[#5C544A] leading-relaxed">
+                  去健身房像完成KPI一樣逼迫自己，是二次虐待。真正的富養，是感受洗臉時的水溫、細嚼慢嚥品嚐食物的紋理、感受吹過臉頰的微風。讓緊繃的「戰鬥交感神經」切換至「副交感修復」狀態。
+                </p>
+              </div>
+              <div className="p-4 bg-white border border-[#E6DFD3] rounded-xl text-left space-y-2 text-xs">
+                <span className="font-mono text-[#8C7461] font-bold block">《身體從未忘記》名言對照：</span>
+                <p className="text-[#7A7165] italic leading-relaxed">
+                  「大腦可以欺騙自己說『我不累』，但身體誠實地記錄了你所有的壓力和委屈。肩膀的僵硬是沒流出的眼淚，胃部的不適是嚥下去的憤怒。」
+                </p>
+              </div>
+            </div>
+          )
+        },
+        // Slide 6: Cognitive Shield
+        {
+          bg: "from-[#FAF8F5] to-[#E6DFD3]",
+          label: "邏輯五 • 認知算法屏蔽",
+          title: "建構高維屏蔽：過濾社會焦慮算法",
+          render: () => (
+            <div className="grid md:grid-cols-2 gap-8 items-center py-2">
+              <div className="space-y-4 text-left">
+                <h3 className="text-xl font-serif font-bold text-[#322C25]">社會設定的成功，是一套焦慮幻覺</h3>
+                <p className="text-xs text-[#5C544A] leading-relaxed">
+                  「35歲必須當主管」、「40歲必須買房」。算法不停推播焦慮，是為了讓你繼續像齒輪一樣拼命生產、拼命消費。屏蔽掉世俗噪音，允許自己做個普通人，大方承認「我就這樣，目前挺好」。
+                </p>
+              </div>
+              <div className="p-5 bg-white border border-[#E6DFD3] rounded-xl flex flex-col justify-center text-center shadow-sm h-44 space-y-2">
+                <span className="text-2xl">🧠</span>
+                <h4 className="text-xs font-bold text-[#322C25]">高維屏蔽心法</h4>
+                <p className="text-[10px] text-[#8C7461] leading-relaxed italic">
+                  「你的大腦客廳是有限的，別讓攀比的垃圾進來。屏蔽不是逃避，而是最理智的主動選擇。」
+                </p>
+              </div>
+            </div>
+          )
+        },
+        // Slide 7: Pure and useless sanctuary
+        {
+          bg: "from-[#E6DFD3] to-[#F1ECE1]",
+          label: "邏輯六 • 純粹且無用的精神結界",
+          title: "無用之用：抵禦人生荒蕪的最後堡壘",
+          render: () => (
+            <div className="grid md:grid-cols-2 gap-8 items-center py-2">
+              <div className="space-y-4 text-left">
+                <h3 className="text-xl font-serif font-bold text-[#322C25]">尋回你那份純粹的心流狀態</h3>
+                <p className="text-xs text-[#5C544A] leading-relaxed">
+                  釣魚、拼一個複雜的樂高、臨摹古人的字帖、深夜靜坐。這個愛好絕對不能是為了賺錢，更不需要發朋友圈炫耀。它的唯一意義，就是讓你在那段時間裡，忘記身份，做回純粹的靈魂。
+                </p>
+              </div>
+              <div className="p-6 bg-white rounded-xl border border-[#DCD3C1] flex flex-col items-center justify-center space-y-4 h-52 shadow-sm">
+                <div className="text-center">
+                  <span className="text-[9px] font-mono text-[#8C7461] tracking-widest uppercase block mb-1">正念放鬆計時</span>
+                  <div className="text-4xl font-serif font-black text-[#8C7461] animate-pulse">
+                    {breathTimer} <span className="text-sm">秒</span>
+                  </div>
+                </div>
+                <button
+                  onClick={startBreathing}
+                  disabled={isBreathing}
+                  className={`px-5 py-2 rounded-lg text-xs font-bold transition-all shadow ${
+                    isBreathing ? "bg-gray-100 text-gray-400 cursor-not-allowed" : "bg-[#8C7461] hover:bg-[#786150] text-white"
+                  }`}
+                >
+                  {isBreathing ? "吸氣 ── 呼氣..." : "開啟 10 秒精神結界"}
+                </button>
+              </div>
+            </div>
+          )
+        },
+        // Slide 8: Surrender Wisdom
+        {
+          bg: "from-[#F1ECE1] to-[#FAF8F5]",
+          label: "邏輯七 • 允許一切發生的臣服",
+          title: "臣服：終結你與無常現實的死磕",
+          render: () => (
+            <div className="grid md:grid-cols-2 gap-8 items-center py-2">
+              <div className="space-y-4 text-left">
+                <h3 className="text-xl font-serif font-bold text-[#322C25]">放手那些你根本無法控制的事物</h3>
+                <p className="text-xs text-[#5C544A] leading-relaxed">
+                  你控制不了生老病死、控制不了伴侶的態度、控制不了明天的天氣。把大量能量花在與不可抗力對抗，這就是你痛苦的來源。接住好的、接住壞的，心平氣和地允許它發生。
+                </p>
+                <div className="pt-1">
+                  <button 
+                    onClick={() => setIsSurrendered(!isSurrendered)}
+                    className="px-4 py-2 bg-[#8C7461] hover:bg-[#786150] text-white text-xs font-bold rounded-lg shadow transition-all"
+                  >
+                    {isSurrendered ? "凡人抗拒視角" : "一鍵啟動臣服智慧"}
+                  </button>
+                </div>
+              </div>
+              <div className="p-5 bg-white rounded-xl border border-[#E4DEC9] h-48 flex flex-col justify-center space-y-3 shadow-sm text-left">
+                <div className="text-center font-bold text-xs text-[#322C25]">心智運作狀態</div>
+                {!isSurrendered ? (
+                  <div className="space-y-1 text-xs text-[#5C544A]">
+                    <p className="text-red-600 font-bold">✕ 「為什麼這件事偏偏發生在我身上？」</p>
+                    <p className="text-[10px] text-gray-400">大腦充滿抗拒、內耗與怨恨，隨時瀕臨崩潰。</p>
+                  </div>
+                ) : (
+                  <div className="space-y-1 text-xs text-[#5C544A] animate-fade-in">
+                    <p className="text-emerald-700 font-bold">✓ 「事情已然發生，它想要教會我什麼？」</p>
+                    <p className="text-[10px] text-[#8C7461] font-medium">全盤接住現實，騰出巨大的心靈空間感受寧靜與遼闊。</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )
+        },
+        // Slide 9: manifesto
+        {
+          bg: "from-[#FAF8F5] to-[#E6DFD3]",
+          label: "Action Plan • 2026 行動宣言",
+          title: "今天起，靜靜地重新養育一遍自己",
+          render: () => {
+            const completed = Object.values(sensoryCheck).every(Boolean);
+            return (
+              <div className="text-center py-2 space-y-4 max-w-xl mx-auto">
+                <p className="text-xs text-[#5C544A] max-w-md mx-auto leading-relaxed">
+                  愛自己，就是戴好你自己的氧氣面罩。請勾選今天就願意實踐的富養行動：
+                </p>
+                
+                <div className="space-y-2 text-left">
+                  <div 
+                    onClick={() => setSensoryCheck(p => ({ ...p, coffee: !p.coffee }))}
+                    className={`p-2.5 rounded-lg border cursor-pointer transition-all flex items-center space-x-3 text-xs ${
+                      sensoryCheck.coffee ? 'bg-[#8C7461]/10 border-[#8C7461] text-[#322C25]' : 'bg-white border-[#E6DFD3] text-[#5C544A]'
+                    }`}
+                  >
+                    <div className={`w-4 h-4 rounded border flex items-center justify-center text-[9px] ${
+                      sensoryCheck.coffee ? 'bg-[#8C7461] border-[#8C7461] text-white' : 'border-[#C8BCAC]'
+                    }`}>
+                      {sensoryCheck.coffee && "✓"}
+                    </div>
+                    <span>心安理得地喝一杯你平時捨不得點、高品質的精品咖啡。☕</span>
+                  </div>
+
+                  <div 
+                    onClick={() => setSensoryCheck(p => ({ ...p, flower: !p.flower }))}
+                    className={`p-2.5 rounded-lg border cursor-pointer transition-all flex items-center space-x-3 text-xs ${
+                      sensoryCheck.flower ? 'bg-[#8C7461]/10 border-[#8C7461] text-[#322C25]' : 'bg-white border-[#E6DFD3] text-[#5C544A]'
+                    }`}
+                  >
+                    <div className={`w-4 h-4 rounded border flex items-center justify-center text-[9px] ${
+                      sensoryCheck.flower ? 'bg-[#8C7461] border-[#8C7461] text-white' : 'border-[#C8BCAC]'
+                    }`}>
+                      {sensoryCheck.flower && "✓"}
+                    </div>
+                    <span>不為什麼、只為取悅自己地買一束好看的花放在桌上。🌸</span>
+                  </div>
+
+                  <div 
+                    onClick={() => setSensoryCheck(p => ({ ...p, walk: !p.walk }))}
+                    className={`p-2.5 rounded-lg border cursor-pointer transition-all flex items-center space-x-3 text-xs ${
+                      sensoryCheck.walk ? 'bg-[#8C7461]/10 border-[#8C7461] text-[#322C25]' : 'bg-white border-[#E6DFD3] text-[#5C544A]'
+                    }`}
+                  >
+                    <div className={`w-4 h-4 rounded border flex items-center justify-center text-[9px] ${
+                      sensoryCheck.walk ? 'bg-[#8C7461] border-[#8C7461] text-white' : 'border-[#C8BCAC]'
+                    }`}>
+                      {sensoryCheck.walk && "✓"}
+                    </div>
+                    <span>放下手機，不趕時間、漫無目的地看風吹樹葉，散步 30 分鐘。🍂</span>
+                  </div>
+                </div>
+
+                {completed && (
+                  <div className="bg-[#8C7461] text-white p-3 rounded-lg shadow text-xs font-serif italic max-w-md mx-auto animate-fade-in">
+                    「我先給自己充足的愛與溫暖，我溢出的能量才具備照亮與幫助他人的力量。」
+                  </div>
+                )}
+              </div>
+            );
+          }
+        }
+      ];
+
+      return (
+        <div className="min-h-screen bg-[#F5EFEB] text-[#2C2621] flex flex-col justify-between select-none">
+          <header className="border-b border-[#DCD3C1] px-6 py-4 flex justify-between items-center bg-[#FAF6F0] sticky top-0 z-50">
+            <div className="flex items-center space-x-3">
+              <span className="text-sm font-serif font-black tracking-widest text-[#322C25]">NAVAL WISDOM</span>
+              <span className="px-2 py-0.5 bg-[#8C7461] text-white text-[9px] font-bold rounded tracking-wider uppercase">
+                中年富養學
+              </span>
+            </div>
+            <div className="flex items-center space-x-4">
+              <button 
+                onClick={() => setIsPlaying(!isPlaying)}
+                className={`flex items-center space-x-1 px-3 py-1 rounded-full text-[10px] font-bold tracking-wide transition-all ${
+                  isPlaying ? 'bg-[#8C7461] text-white' : 'bg-[#FAF6F0] text-[#8C7461] border border-[#DCD3C1] hover:bg-[#EFECE1]'
+                }`}
+              >
+                <span>{isPlaying ? '⏸ 暫停' : '▶ 自動播放 (8s)'}</span>
+              </button>
+              <div className="text-xs font-mono text-[#8C7461]">
+                頁碼: {currentSlide + 1} / {slides.length}
+              </div>
+            </div>
+          </header>
+
+          <main className="flex-grow flex items-center justify-center p-4 md:p-8 relative overflow-hidden">
+            <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-[#EFECE1] rounded-full filter blur-[120px] opacity-40 pointer-events-none" />
+            <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-[#E9E3CE] rounded-full filter blur-[120px] opacity-40 pointer-events-none" />
+
+            <div className={`w-full max-w-4xl bg-gradient-to-br ${slides[currentSlide].bgClass} border border-[#DCD3C1] shadow-2xl rounded-2xl p-6 md:p-10 min-h-[450px] flex flex-col justify-between transition-all duration-500 relative z-10`}>
+              <div className="flex items-center space-x-2 text-[#8C7461] mb-2">
+                <span className="text-xs font-mono tracking-widest uppercase font-bold">
+                  {slides[currentSlide].label}
+                </span>
+              </div>
+
+              <div className="flex-grow flex flex-col justify-center py-1">
+                <h2 className="text-2xl md:text-3xl font-serif font-extrabold text-[#322C25] mb-5 tracking-wide">
+                  {slides[currentSlide].title}
+                </h2>
+                {slides[currentSlide].render()}
+              </div>
+
+              <div className="border-t border-[#DCD3C1] pt-4 mt-4 flex justify-between items-center">
+                <div className="flex space-x-1.5 overflow-x-auto max-w-[60%] py-1">
+                  {slides.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => { setIsPlaying(false); setCurrentSlide(idx); }}
+                      className={`h-2 rounded-full transition-all ${
+                        idx === currentSlide ? 'w-8 bg-[#8C7461]' : 'w-2 bg-[#DCD3C1] hover:bg-[#C8BCAC]'
+                      }`}
+                    />
+                  ))}
+                </div>
+
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => { setIsPlaying(false); setCurrentSlide(p => Math.max(0, p - 1)); }}
+                    disabled={currentSlide === 0}
+                    className={`px-3 py-1.5 rounded-lg border border-[#DCD3C1] bg-[#FAF6F0] text-[#8C7461] text-xs font-bold transition-all hover:bg-[#EFECE1] ${
+                      currentSlide === 0 ? 'opacity-30 cursor-not-allowed' : 'active:scale-95'
+                    }`}
+                  >
+                    上頁
+                  </button>
+                  <button
+                    onClick={() => { setIsPlaying(false); setCurrentSlide(p => Math.min(slides.length - 1, p + 1)); }}
+                    disabled={currentSlide === slides.length - 1}
+                    className={`px-3 py-1.5 rounded-lg border border-[#DCD3C1] bg-[#8C7461] text-white text-xs font-bold transition-all hover:bg-[#786150] ${
+                      currentSlide === slides.length - 1 ? 'opacity-30 cursor-not-allowed' : 'active:scale-95'
+                    }`}
+                  >
+                    下頁
+                  </button>
+                </div>
+              </div>
+            </div>
+          </main>
+
+          <footer className="bg-[#FAF6F0] text-center py-3 border-t border-[#DCD3C1] text-[10px] text-[#8C7461] tracking-wider">
+            「向外張望的人在做夢，向內審視的人才是清醒的。」── 榮格 • 中年靜靜富養學
+          </footer>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
