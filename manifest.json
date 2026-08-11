@@ -10,6 +10,11 @@
           "path": "NAVAL/golden-affirmations-10.html"
         },
         {
+          "id": "hercule_wisdom",
+          "title": "當一個人不尊重你時，只需記住「海格力斯效應」",
+          "path": "NAVAL/hercule_wisdom.html"
+        },
+        {
           "id": "invest-yourself-2026",
           "title": "2026 投資自己：接納自我之道",
           "path": "NAVAL/invest-yourself-2026.html"
@@ -42,5 +47,5 @@
       }
     }
   ],
-  "generatedAt": "2026-07-23T09:25:35.816Z"
+  "generatedAt": "2026-08-11T06:17:58.141Z"
 }

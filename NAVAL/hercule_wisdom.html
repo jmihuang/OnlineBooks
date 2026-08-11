@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>當一個人不尊重你時，只需記住「海格力斯效應」</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React and ReactDOM CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <!-- Babel CDN for JSX Parsing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+  
+  <style>
+    body {
+      background-color: #FAF8F5;
+      color: #322C25;
+      font-family: 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+    }
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      background: transparent;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 18px;
+      width: 18px;
+      border-radius: 50%;
+      background: #8C7461;
+      cursor: pointer;
+      margin-top: -6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 6px;
+      cursor: pointer;
+      background: #E6DFD3;
+      border-radius: 3px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Chosen Palette: Warm Neutrals & Philosophical Earth Tones (Cream #FAF8F5, Sand #E6DFD3, Earth #8C7461, Dark Slate #322C25) -->
+  <!-- Application Structure Plan: 
+       A high-end 8-slide interactive SPA presentation dedicated strictly to the "Hercules Effect" and non-reaction wisdom.
+       Interactive features include:
+       - The Bag of Strife Expansion Simulator (Hercules Effect visualization)
+       - Low-frequency Vortex Attractor vs Non-reaction Vacuum Mode
+       - 3-Step Energy Filter Test
+       - Attention Gold Vault Allocation Meter
+       - Non-reaction Oath Checklist
+  -->
+  <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. Visuals rely on CSS/HTML shapes, animations, and unicode symbols. -->
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function App() {
+      const [currentSlide, setCurrentSlide] = useState(0);
+      const [isPlaying, setIsPlaying] = useState(false);
+      
+      // Interactive States
+      const [bagHits, setBagHits] = useState(0); // Hercules effect bag expansion
+      const [vacuumActive, setVacuumActive] = useState(false); // Non-reaction vacuum mode
+      const [filterStep, setFilterStep] = useState(1); // 3-step filter
+      const [checklist, setChecklist] = useState({ h1: false, h2: false, h3: false, h4: false });
+
+      useEffect(() => {
+        let timer;
+        if (isPlaying) {
+          timer = setInterval(() => {
+            setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+          }, 8000);
+        }
+        return () => clearInterval(timer);
+      }, [isPlaying]);
+
+      // Keyboard navigation support
+      useEffect(() => {
+        const handleKeys = (e) => {
+          if (e.key === 'ArrowRight') {
+            setIsPlaying(false);
+            setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+          } else if (e.key === 'ArrowLeft') {
+            setIsPlaying(false);
+            setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+          }
+        };
+        window.addEventListener('keydown', handleKeys);
+        return () => window.removeEventListener('keydown', handleKeys);
+      }, []);
+
+      const slides = [
+        // Slide 1: Title Cover
+        {
+          bg: "from-[#FAF8F5] to-[#E6DFD3]",
+          label: "Presentation • 人際能量法則",
+          title: "當一個人不尊重你時，只需記住「海格力斯效應」",
+          render: () => (
+            <div className="text-center py-6 space-y-6 max-w-2xl mx-auto animate-fade-in">
+              <div className="w-16 h-16 bg-[#E6DFD3] rounded-full flex items-center justify-center text-3xl mx-auto shadow-inner">
+                🏛️
+              </div>
+              <p className="text-[11px] font-mono tracking-[0.25em] text-[#8C7461] font-bold uppercase">
+                The Hercules Effect • Power of Non-Reaction
+              </p>
+              <h1 className="text-2xl sm:text-4xl md:text-4xl font-serif font-black text-[#322C25] leading-tight tracking-wider">
+                最高級的回應，是根本不反應
+              </h1>
+              <p className="text-sm md:text-base text-[#5C544A] italic font-serif">
+                「傷害你的並不是事情本身，而是你在那件事發生之後，為它寫的那整部荒謬劇本。」
+              </p>
+              <div className="h-[1px] w-12 bg-[#8C7461] mx-auto"></div>
+              <p className="text-xs text-[#7A7165] leading-relaxed max-w-lg mx-auto">
+                微小的輕視就像吹進眼睛的細沙。本簡報為您拆解古希臘「海格力斯效應」與量子能量法則，學會守護意識金庫，從無謂的戰場優雅退場。
+              </p>
+              <div className="pt-2">
+                <button 
+                  onClick={() => setCurrentSlide(1)}
+                  className="px-6 py-2.5 bg-[#8C7461] hover:bg-[#786150] text-white rounded-lg text-xs font-bold tracking-widest shadow transition-all hover:scale-105"
+                >
+                  解鎖海格力斯智慧 ➔
+                </button>
+              </div>
+            </div>
+          )
+        },
+        // Slide 2: The Hercules Metaphor
+        {
+          bg: "from-[#FAF8F5] to-[#F3EDE2]",
+          label: "第一章 • 仇恨與紛爭的袋子",
+          title: "越去較勁，越為它輸送養分",
+          render: () => {
+            const bagScale = 1 + bagHits * 0.35;
+            return (
+              <div className="grid md:grid-cols-2 gap-8 items-center py-2 animate-fade-in">
+                <div className="space-y-4 text-left">
+                  <h3 className="text-lg font-serif font-bold text-[#322C25]">海格力斯效應 (Hercules Effect)</h3>
+                  <p className="text-xs text-[#5C544A] leading-relaxed">
+                    英雄海格力斯在路上看到一個小袋子，踩了它一下，袋子膨脹了一圈；他拿戰棍砸它，袋子直接膨脹成巨山堵死山路。智者說：「那是紛爭之袋，你不理它，它只有一點點大；你越攻擊，越在給它輸送養分。」
+                  </p>
+                  <p className="text-[11px] text-[#8C7461] font-bold">
+                    點擊右側按鈕模擬「攻擊袋子」：觀察攻擊如何餵大障礙！
+                  </p>
+                </div>
+                <div className="p-6 bg-white rounded-xl border border-[#E6DFD3] shadow-sm flex flex-col justify-center items-center space-y-4 h-56 overflow-hidden">
+                  <div 
+                    className="bg-[#8C7461]/20 border-2 border-[#8C7461] rounded-full flex items-center justify-center transition-all duration-300 shadow-inner"
+                    style={{ 
+                      width: `${Math.min(130, 48 * bagScale)}px`, 
+                      height: `${Math.min(130, 48 * bagScale)}px` 
+                    }}
+                  >
+                    <span className="text-xs font-bold font-serif text-[#322C25]">
+                      {bagHits === 0 ? "紛爭袋子" : `巨山 (${bagHits}次攻擊)`}
+                    </span>
+                  </div>
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={() => setBagHits(p => p + 1)}
+                      className="px-3.5 py-1.5 bg-[#8C7461] hover:bg-[#786150] text-white text-xs font-bold rounded-lg shadow transition-all"
+                    >
+                      抬腳踩 / 拿棍砸
+                    </button>
+                    <button
+                      onClick={() => setBagHits(0)}
+                      className="px-3.5 py-1.5 bg-[#FAF8F5] border border-[#DCD3C1] text-[#8C7461] text-xs font-bold rounded-lg transition-all"
+                    >
+                      不理會 (重置)
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          }
+        },
+        // Slide 3: Attention Quantum Frequency
+        {
+          bg: "from-[#F3EDE2] to-[#FAF8F5]",
+          label: "第二章 • 量子宇宙視角",
+          title: "注意力是你最強大的能量輸出源",
+          render: () => (
+            <div className="grid md:grid-cols-2 gap-8 items-center py-2 animate-fade-in">
+              <div className="space-y-4 text-left">
+                <h3 className="text-lg font-serif font-bold text-[#322C25]">你關注什麼，就在給什麼餵食</h3>
+                <p className="text-xs text-[#5C544A] leading-relaxed">
+                  別人對你輕視或陰陽怪氣，是在你的場域投擲低頻漩渦。若你起身反駁或反擊，就是在將你高頻的能量灌入對方的低頻漩渦中，滋養對方的低級趣味。
+                </p>
+                <div className="p-3 bg-white rounded-lg border border-[#E6DFD3] text-[10px] text-[#8C7461] leading-relaxed">
+                  💡 <strong>挑釁者的動機：</strong> 冒犯你的人不在乎真相，他們真正渴求的是「你的反應」。你的憤怒給了他們掌控他人情緒的成就感。
+                </div>
+              </div>
+              <div className="p-5 bg-white rounded-xl border border-[#E6DFD3] shadow-sm flex flex-col justify-center text-center space-y-2 h-48">
+                <span className="text-2xl">🌊</span>
+                <h4 className="text-xs font-bold text-[#322C25]">不回應，即真空</h4>
+                <p className="text-[10px] text-[#8C7461] italic leading-relaxed">
+                  「當你像一片深不見底的大海沒有任何回應時，對方的挑釁就像掉進真空裡的石頭，直接摔碎在空氣裡。」
+                </p>
+              </div>
+            </div>
+          )
+        },
+        // Slide 4: Fast vs Slow reaction
+        {
+          bg: "from-[#FAF8F5] to-[#EFECE1]",
+          label: "第三章 • 刺激與回應的緩衝",
+          title: "被刺一下就跳起來，不叫強大",
+          render: () => (
+            <div className="grid md:grid-cols-2 gap-8 items-center py-2 animate-fade-in">
+              <div className="space-y-4 text-left">
+                <h3 className="text-lg font-serif font-bold text-[#322C25]">反應慢甚至不反應，才是真強悍</h3>
+                <p className="text-xs text-[#5C544A] leading-relaxed">
+                  這個時代過度追求「秒回」與「完美懟人」。但聽見冒犯就急著讨說法，只是生物學上的條件反射。一按開關就亮、一踩尾巴就叫，說明極度好操控。
+                </p>
+                <blockquote className="border-l-4 border-[#8C7461] pl-3 py-0.5 text-xs text-[#8C7461] italic">
+                  「真正的強大，是在受到刺激與做出反應之間，擁有一個極其寬闊的緩衝空間。」
+                </blockquote>
+              </div>
+              <div className="p-5 bg-white rounded-xl border border-[#E6DFD3] shadow-sm flex flex-col justify-center space-y-3 h-48 text-left">
+                <div className="text-center font-bold text-xs text-[#322C25]">微小輕視發生時的內心一秒鐘</div>
+                <div className="p-3 bg-[#FAF8F5] rounded border border-[#E6DFD3] text-xs text-[#5C544A] space-y-1">
+                  <span className="font-bold text-[#8C7461] block">關鍵提問：</span>
+                  <p className="italic">「這個人、這件事，真的值得我把今天剩下的意識能量交出去嗎？」</p>
+                </div>
+                <p className="text-[9px] text-[#7A7165] text-center">給自己留出這一秒鐘，答案永遠是：一點都不值得。</p>
+              </div>
+            </div>
+          )
+        },
+        // Slide 5: Energy Storage Vault
+        {
+          bg: "from-[#EFECE1] to-[#FAF8F5]",
+          label: "第四章 • 注意力資產分配",
+          title: "成功者與內耗者的終極差距",
+          render: () => (
+            <div className="grid md:grid-cols-2 gap-8 items-center py-2 animate-fade-in">
+              <div className="space-y-4 text-left">
+                <h3 className="text-lg font-serif font-bold text-[#322C25]">你的意識，是一座防衛森嚴的金庫</h3>
+                <p className="text-xs text-[#5C544A] leading-relaxed">
+                  終生在底層掙扎的人，能量桶處處漏水：別人一句不順眼的話能讓他鬱悶三天。而創造巨大價值的人，絕不為了無關緊要的人一句隨口惡言，動用金庫裡的珍貴儲備。
+                </p>
+              </div>
+              <div className="p-5 bg-white border border-[#E6DFD3] rounded-xl flex flex-col justify-center text-center shadow-sm h-48 space-y-2">
+                <span className="text-2xl">🏛️</span>
+                <h4 className="text-xs font-bold text-[#322C25]">奧勒留《沉思錄》心法</h4>
+                <p className="text-[10px] text-[#8C7461] font-serif italic leading-relaxed">
+                  「最好的報復，就是不要變得和傷害你的人一樣。急著去證明自己時，你已經把審判的法錘交給了對方。」
+                </p>
+              </div>
+            </div>
+          )
+        },
+        // Slide 6: 3-Step Filter
+        {
+          bg: "from-[#FAF8F5] to-[#E6DFD3]",
+          label: "第五章 • 心靈三階過濾器",
+          title: "快速防禦：面對輕視的三次自我評估",
+          render: () => (
+            <div className="space-y-4 py-1 animate-fade-in">
+              <div className="text-center max-w-xl mx-auto">
+                <p className="text-xs text-[#5C544A]">
+                  當感受到來自外界的輕視或冒犯時，立刻在心裡進行三次快速評估：
+                </p>
+              </div>
+              <div className="grid md:grid-cols-3 gap-3 text-left">
+                <div 
+                  onClick={() => setFilterStep(1)}
+                  className={`p-3 rounded-xl border cursor-pointer transition-all ${
+                    filterStep === 1 ? 'bg-[#8C7461]/15 border-[#8C7461]' : 'bg-white border-[#E6DFD3]'
+                  }`}
+                >
+                  <span className="text-[10px] font-mono font-bold text-[#8C7461] uppercase block mb-1">評估 1</span>
+                  <h4 className="text-xs font-bold text-[#322C25] mb-1">對我的人生重要嗎？</h4>
+                  <p className="text-[10px] text-[#7A7165]">若只是路人或不重要的同事，連進入意識垃圾桶的資格都沒有。直接忽略是最高級降維打擊。</p>
+                </div>
+                <div 
+                  onClick={() => setFilterStep(2)}
+                  className={`p-3 rounded-xl border cursor-pointer transition-all ${
+                    filterStep === 2 ? 'bg-[#8C7461]/15 border-[#8C7461]' : 'bg-white border-[#E6DFD3]'
+                  }`}
+                >
+                  <span className="text-[10px] font-mono font-bold text-[#8C7461] uppercase block mb-1">評估 2</span>
+                  <h4 className="text-xs font-bold text-[#322C25] mb-1">值得消耗能量溝通嗎？</h4>
+                  <p className="text-[10px] text-[#7A7165]">若是在乎的夥伴，可在冷靜時清晰客觀表述邊界（只說事實不說情緒）。溝通無效則果斷退場。</p>
+                </div>
+                <div 
+                  onClick={() => setFilterStep(3)}
+                  className={`p-3 rounded-xl border cursor-pointer transition-all ${
+                    filterStep === 3 ? 'bg-[#8C7461]/15 border-[#8C7461]' : 'bg-white border-[#E6DFD3]'
+                  }`}
+                >
+                  <span className="text-[10px] font-mono font-bold text-[#8C7461] uppercase block mb-1">評估 3</span>
+                  <h4 className="text-xs font-bold text-[#322C25] mb-1">是虛榮心被挑動了嗎？</h4>
+                  <p className="text-[10px] text-[#7A7165]">很多時候憤怒是因為無法接受別人竟敢不按期待對待自己，這本質上是想要控制別人的妄念。</p>
+                </div>
+              </div>
+            </div>
+          )
+        },
+        // Slide 7: Sympathetic Resonance
+        {
+          bg: "from-[#E6DFD3] to-[#F1ECE1]",
+          label: "第六章 • 同頻共振法則",
+          title: "離開無謂的戰場，是唯一的勝利",
+          render: () => (
+            <div className="grid md:grid-cols-2 gap-8 items-center py-2 animate-fade-in">
+              <div className="space-y-4 text-left">
+                <h3 className="text-lg font-serif font-bold text-[#322C25]">低級紛爭迷宮裡沒有任何戰利品</h3>
+                <p className="text-xs text-[#5C544A] leading-relaxed">
+                  為了一時口舌之快，付出的心智能量極其昂貴。真正的強者追求像大海深處一般的極致平靜。當你不給低頻人事事提供任何反饋時，能量寄生蟲就會感到無趣而自動消失。
+                </p>
+              </div>
+              <div className="p-5 bg-white rounded-xl border border-[#DCD3C1] flex flex-col justify-center text-center shadow-sm h-48 space-y-2">
+                <span className="text-2xl">✨</span>
+                <h4 className="text-xs font-bold text-[#322C25]">高頻吸引律</h4>
+                <p className="text-[10px] text-[#8C7461] italic leading-relaxed">
+                  「那些真正高頻、有格局、懂尊重的人，會被你身上那種不為所動的平靜所吸引，自然靠攏形成高能量共振。」
+                </p>
+              </div>
+            </div>
+          )
+        },
+        // Slide 8: Action Manifesto
+        {
+          bg: "from-[#FAF8F5] to-[#E6DFD3]",
+          label: "Action Plan • 尊嚴終極宣言",
+          title: "你的尊嚴，來自隨時抽離的絕對自由",
+          render: () => {
+            const completed = Object.values(checklist).every(Boolean);
+            return (
+              <div className="text-center py-1 space-y-4 max-w-xl mx-auto animate-fade-in">
+                <p className="text-xs text-[#5C544A] max-w-md mx-auto leading-relaxed">
+                  尊嚴不是靠贏得口舌建立的。勾選以下宣言，走出困住你的狹窄房間：
+                </p>
+                
+                <div className="space-y-2 text-left">
+                  <div 
+                    onClick={() => setChecklist(p => ({ ...p, h1: !p.h1 }))}
+                    className={`p-2.5 rounded-lg border cursor-pointer transition-all flex items-center space-x-3 text-xs ${
+                      checklist.h1 ? 'bg-[#8C7461]/10 border-[#8C7461] text-[#322C25]' : 'bg-white border-[#E6DFD3] text-[#5C544A]'
+                    }`}
+                  >
+                    <div className={`w-4 h-4 rounded border flex items-center justify-center text-[9px] ${
+                      checklist.h1 ? 'bg-[#8C7461] border-[#8C7461] text-white' : 'border-[#C8BCAC]'
+                    }`}>
+                      {checklist.h1 && "✓"}
+                    </div>
+                    <span>不上鉤：面對微小輕視不踩不砸，平靜轉身繼續走自己的路。</span>
+                  </div>
+
+                  <div 
+                    onClick={() => setChecklist(p => ({ ...p, h2: !p.h2 }))}
+                    className={`p-2.5 rounded-lg border cursor-pointer transition-all flex items-center space-x-3 text-xs ${
+                      checklist.h2 ? 'bg-[#8C7461]/10 border-[#8C7461] text-[#322C25]' : 'bg-white border-[#E6DFD3] text-[#5C544A]'
+                    }`}
+                  >
+                    <div className={`w-4 h-4 rounded border flex items-center justify-center text-[9px] ${
+                      checklist.h2 ? 'bg-[#8C7461] border-[#8C7461] text-white' : 'border-[#C8BCAC]'
+                    }`}>
+                      {checklist.h2 && "✓"}
+                    </div>
+                    <span>不證明：不向任何人祈求清白證明，拒絕把審判法錘交給別人。</span>
+                  </div>
+
+                  <div 
+                    onClick={() => setChecklist(p => ({ ...p, h3: !p.h3 }))}
+                    className={`p-2.5 rounded-lg border cursor-pointer transition-all flex items-center space-x-3 text-xs ${
+                      checklist.h3 ? 'bg-[#8C7461]/10 border-[#8C7461] text-[#322C25]' : 'bg-white border-[#E6DFD3] text-[#5C544A]'
+                    }`}
+                  >
+                    <div className={`w-4 h-4 rounded border flex items-center justify-center text-[9px] ${
+                      checklist.h3 ? 'bg-[#8C7461] border-[#8C7461] text-white' : 'border-[#C8BCAC]'
+                    }`}>
+                      {checklist.h3 && "✓"}
+                    </div>
+                    <span>守金庫：保護寶貴的生命注意力，只傾注於愛、書籍、事業與美。</span>
+                  </div>
+                </div>
+
+                {completed && (
+                  <div className="bg-[#8C7461] text-white p-3 rounded-lg shadow text-xs font-serif italic max-w-md mx-auto animate-fade-in">
+                    「當你不再需要透過任何人的承認來證明自己時，你就徹底贏得了這場關於生命的博弈。」
+                  </div>
+                )}
+              </div>
+            );
+          }
+        }
+      ];
+
+      return (
+        <div className="min-h-screen bg-[#F5EFEB] text-[#2C2621] flex flex-col justify-between select-none">
+          <header className="border-b border-[#DCD3C1] px-6 py-4 flex justify-between items-center bg-[#FAF6F0] sticky top-0 z-50">
+            <div className="flex items-center space-x-3">
+              <span className="text-sm font-serif font-black tracking-widest text-[#322C25]">海格力斯智慧</span>
+              <span className="px-2 py-0.5 bg-[#8C7461] text-white text-[9px] font-bold rounded tracking-wider uppercase">
+                不反應法則
+              </span>
+            </div>
+            <div className="flex items-center space-x-4">
+              <button 
+                onClick={() => setIsPlaying(!isPlaying)}
+                className={`flex items-center space-x-1 px-3 py-1 rounded-full text-[10px] font-bold tracking-wide transition-all ${
+                  isPlaying ? 'bg-[#8C7461] text-white' : 'bg-[#FAF6F0] text-[#8C7461] border border-[#DCD3C1] hover:bg-[#EFECE1]'
+                }`}
+              >
+                <span>{isPlaying ? '⏸ 暫停' : '▶ 自動播放 (8s)'}</span>
+              </button>
+              <div className="text-xs font-mono text-[#8C7461]">
+                頁碼: {currentSlide + 1} / {slides.length}
+              </div>
+            </div>
+          </header>
+
+          <main className="flex-grow flex items-center justify-center p-4 md:p-8 relative overflow-hidden">
+            <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-[#EFECE1] rounded-full filter blur-[120px] opacity-40 pointer-events-none" />
+            <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-[#E9E3CE] rounded-full filter blur-[120px] opacity-40 pointer-events-none" />
+
+            <div className={`w-full max-w-4xl bg-gradient-to-br ${slides[currentSlide].bgClass} border border-[#DCD3C1] shadow-2xl rounded-2xl p-6 md:p-10 min-h-[450px] flex flex-col justify-between transition-all duration-500 relative z-10`}>
+              <div className="flex items-center space-x-2 text-[#8C7461] mb-2">
+                <span className="text-xs font-mono tracking-widest uppercase font-bold">
+                  {slides[currentSlide].label}
+                </span>
+              </div>
+
+              <div className="flex-grow flex flex-col justify-center py-1">
+                <h2 className="text-2xl md:text-3xl font-serif font-extrabold text-[#322C25] mb-5 tracking-wide">
+                  {slides[currentSlide].title}
+                </h2>
+                {slides[currentSlide].render()}
+              </div>
+
+              <div className="border-t border-[#DCD3C1] pt-4 mt-4 flex justify-between items-center">
+                <div className="flex space-x-1.5 overflow-x-auto max-w-[60%] py-1">
+                  {slides.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => { setIsPlaying(false); setCurrentSlide(idx); }}
+                      className={`h-2 rounded-full transition-all ${
+                        idx === currentSlide ? 'w-8 bg-[#8C7461]' : 'w-2 bg-[#DCD3C1] hover:bg-[#C8BCAC]'
+                      }`}
+                    />
+                  ))}
+                </div>
+
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => { setIsPlaying(false); setCurrentSlide(p => Math.max(0, p - 1)); }}
+                    disabled={currentSlide === 0}
+                    className={`px-3 py-1.5 rounded-lg border border-[#DCD3C1] bg-[#FAF6F0] text-[#8C7461] text-xs font-bold transition-all hover:bg-[#EFECE1] ${
+                      currentSlide === 0 ? 'opacity-30 cursor-not-allowed' : 'active:scale-95'
+                    }`}
+                  >
+                    上頁
+                  </button>
+                  <button
+                    onClick={() => { setIsPlaying(false); setCurrentSlide(p => Math.min(slides.length - 1, p + 1)); }}
+                    disabled={currentSlide === slides.length - 1}
+                    className={`px-3 py-1.5 rounded-lg border border-[#DCD3C1] bg-[#8C7461] text-white text-xs font-bold transition-all hover:bg-[#786150] ${
+                      currentSlide === slides.length - 1 ? 'opacity-30 cursor-not-allowed' : 'active:scale-95'
+                    }`}
+                  >
+                    下頁
+                  </button>
+                </div>
+              </div>
+            </div>
+          </main>
+
+          <footer className="bg-[#FAF6F0] text-center py-3 border-t border-[#DCD3C1] text-[10px] text-[#8C7461] tracking-wider">
+            「最好的報復，就是不要變得和傷害你的人一樣。」── 奧勒留 • 海格力斯效應簡報
+          </footer>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
