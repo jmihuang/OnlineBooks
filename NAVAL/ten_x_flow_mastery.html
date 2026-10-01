@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>跨越十倍躍遷：關掉前額葉噪音，進入心流人生</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React and ReactDOM CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <!-- Babel CDN for JSX Parsing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+  
+  <style>
+    body {
+      background-color: #FAF8F5;
+      color: #322C25;
+      font-family: 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+    }
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      background: transparent;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 18px;
+      width: 18px;
+      border-radius: 50%;
+      background: #8C7461;
+      cursor: pointer;
+      margin-top: -6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 6px;
+      cursor: pointer;
+      background: #E6DFD3;
+      border-radius: 3px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Chosen Palette: Warm Neutrals & Philosophical Earth Tones (Cream #FAF8F5, Sand #E6DFD3, Earth #8C7461, Dark Slate #322C25) -->
+  <!-- Application Structure Plan:
+       An 8-slide interactive SPA presentation focused strictly on the "10X Jump vs 10% Marginal Trap", 
+       prefrontal cortex down-regulation (transient hypofrontality), flow state activation, and writing as an infinite leverage tool.
+       Interactive features:
+       - 10% incremental trap vs 10X leap simulator
+       - Prefrontal cortex noise slider & hypofrontality trigger
+       - Challenge-Skill flow balance channel visualizer
+       - 90-minute ultradian rhythm countdown focus simulator
+       - Writing leverage multiplier & action oath checklist
+  -->
+  <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. Visuals rely on CSS/HTML shapes, animations, and unicode symbols. -->
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function App() {
+      const [currentSlide, setCurrentSlide] = useState(0);
+      const [isPlaying, setIsPlaying] = useState(false);
+
+      // Interactive States
+      const [pfcNoise, setPfcNoise] = useState(80); // Prefrontal cortex noise level
+      const [flowChannel, setFlowChannel] = useState(50); // Challenge vs Skill ratio
+      const [focusSeconds, setFocusSeconds] = useState(90); // 90 min / 90s representation
+      const [isFocusing, setIsFocusing] = useState(false);
+      const [writtenArticles, setWrittenArticles] = useState(3);
+      const [checklist, setChecklist] = useState({ c1: false, c2: false, c3: false, c4: false });
+
+      useEffect(() => {
+        let timer;
+        if (isPlaying) {
+          timer = setInterval(() => {
+            setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+          }, 8000);
+        }
+        return () => clearInterval(timer);
+      }, [isPlaying]);
+
+      // Keyboard navigation
+      useEffect(() => {
+        const handleKeys = (e) => {
+          if (e.key === 'ArrowRight') {
+            setIsPlaying(false);
+            setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+          } else if (e.key === 'ArrowLeft') {
+            setIsPlaying(false);
+            setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+          }
+        };
+        window.addEventListener('keydown', handleKeys);
+        return () => window.removeEventListener('keydown', handleKeys);
+      }, []);
+
+      // Ultradian rhythm timer simulation
+      useEffect(() => {
+        let interval;
+        if (isFocusing && focusSeconds > 0) {
+          interval = setInterval(() => {
+            setFocusSeconds((prev) => prev - 1);
+          }, 1000);
+        } else if (focusSeconds === 0) {
+          setIsFocusing(false);
+        }
+        return () => clearInterval(interval);
+      }, [isFocusing, focusSeconds]);
+
+      const slides = [
+        // Slide 1: Cover
+        {
+          bg: "from-[#FAF8F5] to-[#E6DFD3]",
+          label: "Presentation • 認知躍遷系統",
+          title: "跨越十倍躍遷：關掉前額葉噪音，進入心流人生",
+          render: () => (
+            <div className="text-center py-6 space-y-6 max-w-2xl mx-auto animate-fade-in">
+              <div className="w-16 h-16 bg-[#E6DFD3] rounded-full flex items-center justify-center text-3xl mx-auto shadow-inner">
+                ⚡
+              </div>
+              <p className="text-[11px] font-mono tracking-[0.25em] text-[#8C7461] font-bold uppercase">
+                The 10X Rule • Transient Hypofrontality
+              </p>
+              <h1 className="text-2xl sm:text-4xl md:text-4xl font-serif font-black text-[#322C25] leading-tight tracking-wider">
+                取得 10 倍成果，往往比 10% 更容易
+              </h1>
+              <p className="text-sm md:text-base text-[#5C544A] italic font-serif">
+                「追求 10% 的改善是世界上最擁擠的死胡同；跨越 10 倍是扔掉舊地圖，自建高速公路。」
+              </p>
+              <div className="h-[1px] w-12 bg-[#8C7461] mx-auto"></div>
+              <p className="text-xs text-[#7A7165] leading-relaxed max-w-lg mx-auto">
+                工業時代用時間乘以汗水算產出，大師時代用抑制大腦監控器、召喚 500% 效率心流與無限槓桿實現量子級別躍遷。
+              </p>
+              <div className="pt-2">
+                <button
+                  onClick={() => setCurrentSlide(1)}
+                  className="px-6 py-2.5 bg-[#8C7461] hover:bg-[#786150] text-white rounded-lg text-xs font-bold tracking-widest shadow transition-all hover:scale-105"
+                >
+                  解鎖十倍思維密碼 ➔
+                </button>
+              </div>
+            </div>
+          )
+        },
+
+        // Slide 2: 10% Trap vs 10X Paradigm
+        {
+          bg: "from-[#FAF8F5] to-[#F3EDE2]",
+          label: "第一章 • 賽道選擇的殘酷本質",
+          title: "加法思維是泥潭，乘法思維是生路",
+          render: () => (
+            <div className="grid md:grid-cols-2 gap-8 items-center py-2 animate-fade-in">
+              <div className="space-y-4 text-left">
+                <h3 className="text-lg font-serif font-bold text-[#322C25]">追求 10% 進步的死胡同</h3>
+                <p className="text-xs text-[#5C544A] leading-relaxed">
+                  多數人堅信「多一分耕耘換一分收穫」，於是定更早的鬧鐘、熬更晚的夜、扣更細節的流程。你在這張舊地圖上和千軍萬馬拼體力，只會榨乾生命能量。
+                </p>
+                <p className="text-xs text-[#5C544A] leading-relaxed">
+                  十倍目標迫使你根本無法靠加班完成，它強制你徹底顛覆框架、砍掉 90% 的低價值所事、直接開闢全新的遊戲規則。
+                </p>
+              </div>
+              <div className="space-y-3">
+                <div className="p-4 bg-white rounded-xl border border-red-200 text-left space-y-1">
+                  <div className="flex items-center space-x-2 text-xs font-bold text-red-700">
+                    <span>❌ 增量賽道 (+10%)</span>
+                  </div>
+                  <p className="text-[11px] text-[#7A7165]">
+                    舊框架疊加、卷體力、邊際收益遞減、在泥潭中爭奪殘羹剩飯。
+                  </p>
+                </div>
+                <div className="p-4 bg-white rounded-xl border border-[#8C7461] text-left space-y-1 shadow-sm">
+                  <div className="flex items-center space-x-2 text-xs font-bold text-[#8C7461]">
+                    <span>✨ 量子躍遷 (10X)</span>
+                  </div>
+                  <p className="text-[11px] text-[#7A7165]">
+                    徹底拋棄舊地圖、重構底層杠桿、無人競逐的藍海、以心流直擊核心。
+                  </p>
+                </div>
+              </div>
+            </div>
+          )
+        },
+
+        // Slide 3: Prefrontal Cortex & Hypofrontality
+        {
+          bg: "from-[#F3EDE2] to-[#FAF8F5]",
+          label: "第二章 • 生物腦科學機制",
+          title: "拔掉前額葉監控器的電源",
+          render: () => {
+            const isQuiet = pfcNoise <= 30;
+            return (
+              <div className="grid md:grid-cols-2 gap-8 items-center py-2 animate-fade-in">
+                <div className="space-y-4 text-left">
+                  <h3 className="text-lg font-serif font-bold text-[#322C25]">暫時性前額葉低效 (Hypofrontality)</h3>
+                  <p className="text-xs text-[#5C544A] leading-relaxed">
+                    前額葉是你的首席執行官，但它往往過度活躍：不斷碎碎念「這樣做對不對？」、「別人怎麼看我？」、「失敗怎麼辦？」。只要這個聲音還在，你就在消耗巨大的能量打轉。
+                  </p>
+                  <p className="text-[11px] text-[#8C7461] font-bold">
+                    拉動滑桿：調低前額葉噪音，觀察意識如何進入心流直覺狀態！
+                  </p>
+                </div>
+                <div className="p-6 bg-white rounded-xl border border-[#E6DFD3] shadow-sm flex flex-col justify-center space-y-4">
+                  <div className="flex justify-between text-xs text-[#5C544A] font-mono">
+                    <span>前額葉批判噪音</span>
+                    <span className="font-bold text-[#8C7461]">{pfcNoise}%</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="10"
+                    max="100"
+                    value={pfcNoise}
+                    onChange={(e) => setPfcNoise(Number(e.target.value))}
+                    className="accent-[#8C7461] cursor-pointer"
+                  />
+                  <div className={`p-3 rounded-lg border text-xs text-center transition-all ${
+                    isQuiet ? 'bg-emerald-50 border-emerald-300 text-emerald-800' : 'bg-red-50 border-red-200 text-red-800'
+                  }`}>
+                    {isQuiet 
+                      ? "✨ 監控器關閉！進入心流：直覺無比敏銳、時間感消失、效率飆升 500%"
+                      : "⚠️️ 監控器超載：不斷自我質疑、恐懼失敗、深陷 10% 內耗泥潭"}
+                  </div>
+                </div>
+              </div>
+            );
+          }
+        },
+
+        // Slide 4: Engineering Question vs Fear Question
+        {
+          bg: "from-[#FAF8F5] to-[#EFECE1]",
+          label: "第三章 • 大腦逆向工程",
+          title: "將自我懷疑轉化為「工程計算題」",
+          render: () => (
+            <div className="grid md:grid-cols-2 gap-8 items-center py-2 animate-fade-in">
+              <div className="space-y-4 text-left">
+                <h3 className="text-lg font-serif font-bold text-[#322C25]">改變你與自己對話的底層語法</h3>
+                <p className="text-xs text-[#5C544A] leading-relaxed">
+                  面對十倍目標，普通人問：「我真的能做到嗎？」前額葉立刻翻出過往失敗記憶，列出 101 個退縮理由。
+                </p>
+                <blockquote className="border-l-4 border-[#8C7461] pl-3 py-1 text-xs text-[#8C7461] italic">
+                  高手只問：「如果這個 10 倍目標要成真，必須滿足哪些條件？」
+                </blockquote>
+                <p className="text-xs text-[#5C544A] leading-relaxed">
+                  這句提問繞過了恐懼與自我評判，把情緒危機直接降維成客觀的架構拆解。
+                </p>
+              </div>
+              <div className="p-5 bg-white rounded-xl border border-[#E6DFD3] shadow-sm space-y-3 text-left">
+                <div className="text-xs font-bold text-[#322C25] text-center">目標具體化公式</div>
+                <div className="p-3 bg-red-50/60 rounded border border-red-200 text-xs text-[#5C544A]">
+                  <span className="font-bold text-red-700 block mb-0.5">✕ 模糊口號（製造拖延）：</span>
+                  「我要更有影響力、賺更多錢。」
+                </div>
+                <div className="p-3 bg-emerald-50/60 rounded border border-emerald-200 text-xs text-[#5C544A]">
+                  <span className="font-bold text-emerald-800 block mb-0.5">✓ 具體畫面動作（大腦秒懂）：</span>
+                  「每月坐在靠窗木桌前敲鍵盤，穩定產出 18 篇高質量洞察。」
+                </div>
+              </div>
+            </div>
+          )
+        },
+
+        // Slide 5: Flow Channel & Physical Base
+        {
+          bg: "from-[#EFECE1] to-[#FAF8F5]",
+          label: "第四章 • 身心硬體與心流通道",
+          title: "在挑戰與技能的刀刃上遊走",
+          render: () => {
+            const getChannelState = (val) => {
+              if (val < 40) return "無聊區：挑戰低於技能，前額葉走神、注意力渙散。";
+              if (val > 65) return "恐慌區：挑戰遠高於現有能力，誘發焦慮與防禦癱瘓。";
+              return "心流通道 (Flow)：微踮腳尖剛好夠到的挑戰，忘我高產！";
+            };
+            return (
+              <div className="grid md:grid-cols-2 gap-8 items-center py-2 animate-fade-in">
+                <div className="space-y-4 text-left">
+                  <h3 className="text-lg font-serif font-bold text-[#322C25]">身體是心流運行的硬體神廟</h3>
+                  <p className="text-xs text-[#5C544A] leading-relaxed">
+                    長期慢性發炎、皮質醇飆升的肉身，不可能支撐十倍的大腦躍遷。充足睡眠是物理清洗大腦、心肺運動是泵入氧氣。在硬體健康之上，將任務調節至心流通道的邊緣。
+                  </p>
+                  <div className="p-3 bg-white rounded border border-[#E6DFD3] text-[11px] text-[#8C7461]">
+                    <strong>通道診斷：</strong> {getChannelState(flowChannel)}
+                  </div>
+                </div>
+                <div className="p-6 bg-white rounded-xl border border-[#E6DFD3] shadow-sm space-y-4 flex flex-col justify-center">
+                  <div className="flex justify-between text-xs text-[#5C544A] font-mono">
+                    <span>挑戰 ➔ 技能 匹配度</span>
+                    <span className="font-bold text-[#8C7461]">{flowChannel}%</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="10"
+                    max="100"
+                    value={flowChannel}
+                    onChange={(e) => setFlowChannel(Number(e.target.value))}
+                    className="accent-[#8C7461] cursor-pointer"
+                  />
+                  <div className="text-[10px] text-[#7A7165] text-center italic">
+                    *在「稍微困難」與「稍可觸及」之間反覆橫跳，心流自然降臨。
+                  </div>
+                </div>
+              </div>
+            );
+          }
+        },
+
+        // Slide 6: 90-Min Ultradian Rhythm & Vacuum Environment
+        {
+          bg: "from-[#FAF8F5] to-[#E6DFD3]",
+          label: "第五章 • 90 分鐘真空專注法則",
+          title: "順應超晝夜節律，拒絕連續8小時偽勤奮",
+          render: () => (
+            <div className="grid md:grid-cols-2 gap-8 items-center py-2 animate-fade-in">
+              <div className="space-y-4 text-left">
+                <h3 className="text-lg font-serif font-bold text-[#322C25]">90 分鐘節律：大腦的生物槓桿</h3>
+                <p className="text-xs text-[#5C544A] leading-relaxed">
+                  人體存在約 90 分鐘的超晝夜節律週期。工業時代把人當機器的連坐 8 小時是毒瘤。在狀態最好的 90 分鐘內建立「絕對真空」：關閉所有通知，無人能打斷你。
+                </p>
+                <p className="text-xs text-[#5C544A] leading-relaxed">
+                  週一上午以 500% 心流解決最核心的十倍目標，接下來的時間去散步、放空、讓潛意識在留白中自動抓取下一次躍遷的靈感。
+                </p>
+              </div>
+              <div className="p-6 bg-white rounded-xl border border-[#E6DFD3] shadow-sm flex flex-col items-center justify-center space-y-3">
+                <span className="text-[10px] font-mono text-[#8C7461] tracking-widest uppercase">
+                  超晝夜專注模擬 (90 秒體驗)
+                </span>
+                <div className="text-4xl font-serif font-black text-[#8C7461] animate-pulse">
+                  {focusSeconds} <span className="text-sm">秒</span>
+                </div>
+                <button
+                  onClick={() => setIsFocusing(!isFocusing)}
+                  className={`px-5 py-2 rounded-lg text-xs font-bold transition-all shadow ${
+                    isFocusing ? 'bg-red-800 text-white' : 'bg-[#8C7461] hover:bg-[#786150] text-white'
+                  }`}
+                >
+                  {isFocusing ? "暫停專注" : "啟動真空專注結界"}
+                </button>
+              </div>
+            </div>
+          )
+        },
+
+        // Slide 7: Writing as Infinite Leverage
+        {
+          bg: "from-[#E6DFD3] to-[#F1ECE1]",
+          label: "第六章 • 終極千倍槓桿",
+          title: "寫作：零成本的無限制代碼與不死士兵",
+          render: () => {
+            const potentialReach = Math.pow(10, writtenArticles).toLocaleString();
+            return (
+              <div className="grid md:grid-cols-2 gap-8 items-center py-2 animate-fade-in">
+                <div className="space-y-4 text-left">
+                  <h3 className="text-lg font-serif font-bold text-[#322C25]">寫作是鍛鍊前額葉的最高級工具</h3>
+                  <p className="text-xs text-[#5C544A] leading-relaxed">
+                    口頭說話隨風而散，體力勞動一小時耗盡。但把心流提煉出的通透思想寫成精煉文字，它的複製邊際成本為 0。
+                  </p>
+                  <p className="text-xs text-[#5C544A] leading-relaxed">
+                    每一段精準文字都是你派出去的「不死士兵」，24 小時在網路世界替你篩選同頻者、吸引資源與超常運氣。
+                  </p>
+                </div>
+                <div className="p-6 bg-white rounded-xl border border-[#DCD3C1] shadow-sm space-y-4 flex flex-col justify-center">
+                  <div className="flex justify-between text-xs text-[#5C544A] font-mono">
+                    <span>深度內容產出數量</span>
+                    <span className="font-bold text-[#8C7461]">{writtenArticles} 篇核心洞察</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="1"
+                    max="6"
+                    value={writtenArticles}
+                    onChange={(e) => setWrittenArticles(Number(e.target.value))}
+                    className="accent-[#8C7461] cursor-pointer"
+                  />
+                  <div className="text-center pt-2">
+                    <span className="text-xs text-[#7A7165]">全網潛在非線性影響槓桿：</span>
+                    <span className="text-2xl font-serif font-black text-[#8C7461] ml-1">~{potentialReach}+</span>
+                  </div>
+                </div>
+              </div>
+            );
+          }
+        },
+
+        // Slide 8: Action Plan Checklist
+        {
+          bg: "from-[#FAF8F5] to-[#E6DFD3]",
+          label: "Action Plan • 十倍躍遷實踐宣言",
+          title: "扔掉舊地圖，走向不可戰勝的自己",
+          render: () => {
+            const completed = Object.values(checklist).every(Boolean);
+            return (
+              <div className="text-center py-1 space-y-4 max-w-xl mx-auto animate-fade-in">
+                <p className="text-xs text-[#5C544A] leading-relaxed">
+                  不再向任何人證明你多努力，勾選以下清單，讓結果主動來找你：
+                </p>
+                <div className="space-y-2 text-left">
+                  <div
+                    onClick={() => setChecklist(p => ({ ...p, c1: !p.c1 }))}
+                    className={`p-2.5 rounded-lg border cursor-pointer transition-all flex items-center space-x-3 text-xs ${
+                      checklist.c1 ? 'bg-[#8C7461]/10 border-[#8C7461] text-[#322C25]' : 'bg-white border-[#E6DFD3] text-[#5C544A]'
+                    }`}
+                  >
+                    <div className={`w-4 h-4 rounded border flex items-center justify-center text-[9px] ${
+                      checklist.c1 ? 'bg-[#8C7461] border-[#8C7461] text-white' : 'border-[#C8BCAC]'
+                    }`}>
+                      {checklist.c1 && "✓"}
+                    </div>
+                    <span>拒絕加法內卷：停止在 10% 的擁擠賽道捲體力，只瞄準 10 倍乘法目標。</span>
+                  </div>
+
+                  <div
+                    onClick={() => setChecklist(p => ({ ...p, c2: !p.c2 }))}
+                    className={`p-2.5 rounded-lg border cursor-pointer transition-all flex items-center space-x-3 text-xs ${
+                      checklist.c2 ? 'bg-[#8C7461]/10 border-[#8C7461] text-[#322C25]' : 'bg-white border-[#E6DFD3] text-[#5C544A]'
+                    }`}
+                  >
+                    <div className={`w-4 h-4 rounded border flex items-center justify-center text-[9px] ${
+                      checklist.c2 ? 'bg-[#8C7461] border-[#8C7461] text-white' : 'border-[#C8BCAC]'
+                    }`}>
+                      {checklist.c2 && "✓"}
+                    </div>
+                    <span>調低前額葉噪音：不問「我能不能」，只問「成真需要滿足什麼條件」。</span>
+                  </div>
+
+                  <div
+                    onClick={() => setChecklist(p => ({ ...p, c3: !p.c3 }))}
+                    className={`p-2.5 rounded-lg border cursor-pointer transition-all flex items-center space-x-3 text-xs ${
+                      checklist.c3 ? 'bg-[#8C7461]/10 border-[#8C7461] text-[#322C25]' : 'bg-white border-[#E6DFD3] text-[#5C544A]'
+                    }`}
+                  >
+                    <div className={`w-4 h-4 rounded border flex items-center justify-center text-[9px] ${
+                      checklist.c3 ? 'bg-[#8C7461] border-[#8C7461] text-white' : 'border-[#C8BCAC]'
+                    }`}>
+                      {checklist.c3 && "✓"}
+                    </div>
+                    <span>守護 90 分鐘真空：在身心最佳狀態進入心流，其餘時間勇敢留白。</span>
+                  </div>
+
+                  <div
+                    onClick={() => setChecklist(p => ({ ...p, c4: !p.c4 }))}
+                    className={`p-2.5 rounded-lg border cursor-pointer transition-all flex items-center space-x-3 text-xs ${
+                      checklist.c4 ? 'bg-[#8C7461]/10 border-[#8C7461] text-[#322C25]' : 'bg-white border-[#E6DFD3] text-[#5C544A]'
+                    }`}
+                  >
+                    <div className={`w-4 h-4 rounded border flex items-center justify-center text-[9px] ${
+                      checklist.c4 ? 'bg-[#8C7461] border-[#8C7461] text-white' : 'border-[#C8BCAC]'
+                    }`}>
+                      {checklist.c4 && "✓"}
+                    </div>
+                    <span>啟動寫作槓桿：將深刻思考化作不死士兵，建立無邊際成本的影響力。</span>
+                  </div>
+                </div>
+
+                {completed && (
+                  <div className="bg-[#8C7461] text-white p-3 rounded-lg shadow text-xs font-serif italic max-w-md mx-auto animate-fade-in">
+                    「當你學會讓前額葉安靜、以心流撼動槓桿時，十倍不是奇蹟，只是物理計算的必然結果。」
+                  </div>
+                )}
+              </div>
+            );
+          }
+        }
+      ];
+
+      return (
+        <div className="min-h-screen bg-[#F5EFEB] text-[#2C2621] flex flex-col justify-between select-none">
+          <header className="border-b border-[#DCD3C1] px-6 py-4 flex justify-between items-center bg-[#FAF6F0] sticky top-0 z-50">
+            <div className="flex items-center space-x-3">
+              <span className="text-sm font-serif font-black tracking-widest text-[#322C25]">10X 心流演算法</span>
+              <span className="px-2 py-0.5 bg-[#8C7461] text-white text-[9px] font-bold rounded tracking-wider uppercase">
+                認知躍遷系統
+              </span>
+            </div>
+            <div className="flex items-center space-x-4">
+              <button 
+                onClick={() => setIsPlaying(!isPlaying)}
+                className={`flex items-center space-x-1 px-3 py-1 rounded-full text-[10px] font-bold tracking-wide transition-all ${
+                  isPlaying ? 'bg-[#8C7461] text-white' : 'bg-[#FAF6F0] text-[#8C7461] border border-[#DCD3C1] hover:bg-[#EFECE1]'
+                }`}
+              >
+                <span>{isPlaying ? '⏸ 暫停' : '▶ 自動播放 (8s)'}</span>
+              </button>
+              <div className="text-xs font-mono text-[#8C7461]">
+                頁碼: {currentSlide + 1} / {slides.length}
+              </div>
+            </div>
+          </header>
+
+          <main className="flex-grow flex items-center justify-center p-4 md:p-8 relative overflow-hidden">
+            <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-[#EFECE1] rounded-full filter blur-[120px] opacity-40 pointer-events-none" />
+            <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-[#E9E3CE] rounded-full filter blur-[120px] opacity-40 pointer-events-none" />
+
+            <div className={`w-full max-w-4xl bg-gradient-to-br ${slides[currentSlide].bg} border border-[#DCD3C1] shadow-2xl rounded-2xl p-6 md:p-10 min-h-[450px] flex flex-col justify-between transition-all duration-500 relative z-10`}>
+              <div className="flex items-center space-x-2 text-[#8C7461] mb-2">
+                <span className="text-xs font-mono tracking-widest uppercase font-bold">
+                  {slides[currentSlide].label}
+                </span>
+              </div>
+
+              <div className="flex-grow flex flex-col justify-center py-1">
+                <h2 className="text-2xl md:text-3xl font-serif font-extrabold text-[#322C25] mb-5 tracking-wide">
+                  {slides[currentSlide].title}
+                </h2>
+                {slides[currentSlide].render()}
+              </div>
+
+              <div className="border-t border-[#DCD3C1] pt-4 mt-4 flex justify-between items-center">
+                <div className="flex space-x-1.5 overflow-x-auto max-w-[60%] py-1">
+                  {slides.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => { setIsPlaying(false); setCurrentSlide(idx); }}
+                      className={`h-2 rounded-full transition-all ${
+                        idx === currentSlide ? 'w-8 bg-[#8C7461]' : 'w-2 bg-[#DCD3C1] hover:bg-[#C8BCAC]'
+                      }`}
+                    />
+                  ))}
+                </div>
+
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => { setIsPlaying(false); setCurrentSlide(p => Math.max(0, p - 1)); }}
+                    disabled={currentSlide === 0}
+                    className={`px-3 py-1.5 rounded-lg border border-[#DCD3C1] bg-[#FAF6F0] text-[#8C7461] text-xs font-bold transition-all hover:bg-[#EFECE1] ${
+                      currentSlide === 0 ? 'opacity-30 cursor-not-allowed' : 'active:scale-95'
+                    }`}
+                  >
+                    上頁
+                  </button>
+                  <button
+                    onClick={() => { setIsPlaying(false); setCurrentSlide(p => Math.min(slides.length - 1, p + 1)); }}
+                    disabled={currentSlide === slides.length - 1}
+                    className={`px-3 py-1.5 rounded-lg border border-[#DCD3C1] bg-[#8C7461] text-white text-xs font-bold transition-all hover:bg-[#786150] ${
+                      currentSlide === slides.length - 1 ? 'opacity-30 cursor-not-allowed' : 'active:scale-95'
+                    }`}
+                  >
+                    下頁
+                  </button>
+                </div>
+              </div>
+            </div>
+          </main>
+
+          <footer className="bg-[#FAF6F0] text-center py-3 border-t border-[#DCD3C1] text-[10px] text-[#8C7461] tracking-wider">
+            「人類所有的痛苦，都源於無法獨自安靜地坐在房間裡。」── 帕斯卡 • 十倍心流躍遷簡報
+          </footer>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
